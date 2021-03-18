@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prov:document xmlns:prov="http://www.w3.org/ns/prov#" xmlns="http://example.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <prov:entity prov:id="Land Use Data">
+    <prov:type xsi:type="xsd:QName">Land Use Data</prov:type>
+  </prov:entity>
+  <prov:activity prov:id="Road Pollution Classification" />
+  <prov:activity prov:id="Identify Measuring Points" />
+  <prov:entity prov:id="Traffic Data">
+    <prov:type xsi:type="xsd:QName">Traffic Data</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="Street Topology Data">
+    <prov:type xsi:type="xsd:QName">Street Topology Data</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="Traffic Detector Data">
+    <prov:type xsi:type="xsd:QName">Traffic Detector Data</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="Classification Map">
+    <prov:type xsi:type="xsd:QName">Classification Map</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="Measuring Points">
+    <prov:type xsi:type="xsd:QName">Measuring Points</prov:type>
+  </prov:entity>
+  <prov:organization prov:id="TUD-SWW" />
+  <prov:organization prov:id="TUD-VLP" />
+  <prov:organization prov:id="TUD-GIS" />
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="Measuring Points" />
+    <prov:activity prov:ref="Identify Measuring Points" />
+  </prov:wasGeneratedBy>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="Classification Map" />
+    <prov:activity prov:ref="Road Pollution Classification" />
+  </prov:wasGeneratedBy>
+  <prov:used>
+    <prov:activity prov:ref="Road Pollution Classification" />
+    <prov:entity prov:ref="Land Use Data" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Road Pollution Classification" />
+    <prov:entity prov:ref="Traffic Data" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Road Pollution Classification" />
+    <prov:entity prov:ref="Street Topology Data" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Road Pollution Classification" />
+    <prov:entity prov:ref="Traffic Detector Data" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Identify Measuring Points" />
+    <prov:entity prov:ref="Classification Map" />
+  </prov:used>
+  <prov:activity prov:id="Sampling Campaign" />
+  <prov:entity prov:id="Data File">
+    <prov:type xsi:type="xsd:QName">Data File</prov:type>
+  </prov:entity>
+  <prov:organization prov:id="Students" />
+  <prov:activity prov:id="File Refinement&#xA;Quality Management" />
+  <prov:activity prov:id="Statistical Analysis" />
+  <prov:activity prov:id="Modelling" />
+  <prov:entity prov:id="Time Series">
+    <prov:type xsi:type="xsd:QName">Time Series</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="Sewage Topology">
+    <prov:type xsi:type="xsd:QName">Sewage Topology</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="Rainfall">
+    <prov:type xsi:type="xsd:QName">Rainfall</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="Street Cleaning">
+    <prov:type xsi:type="xsd:QName">Street Cleaning</prov:type>
+  </prov:entity>
+  <prov:entity prov:id="SWMM Model">
+    <prov:type xsi:type="xsd:QName">SWMM Model</prov:type>
+  </prov:entity>
+  <prov:activity prov:id="Execution" />
+  <prov:entity prov:id="Simulations">
+    <prov:type xsi:type="xsd:QName">Simulations</prov:type>
+  </prov:entity>
+  <prov:activity prov:id="Ground Truthing" />
+  <prov:used>
+    <prov:activity prov:ref="Sampling Campaign" />
+    <prov:entity prov:ref="Measuring Points" />
+  </prov:used>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="Data File" />
+    <prov:activity prov:ref="Sampling Campaign" />
+  </prov:wasGeneratedBy>
+  <prov:used>
+    <prov:activity prov:ref="File Refinement&#xA;Quality Management" />
+    <prov:entity prov:ref="Data File" />
+  </prov:used>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="Data File" />
+    <prov:activity prov:ref="File Refinement&#xA;Quality Management" />
+  </prov:wasGeneratedBy>
+  <prov:used>
+    <prov:activity prov:ref="Statistical Analysis" />
+    <prov:entity prov:ref="Data File" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Modelling" />
+    <prov:entity prov:ref="Data File" />
+  </prov:used>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="Time Series" />
+    <prov:activity prov:ref="Statistical Analysis" />
+  </prov:wasGeneratedBy>
+  <prov:used>
+    <prov:activity prov:ref="Modelling" />
+    <prov:entity prov:ref="Time Series" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Modelling" />
+    <prov:entity prov:ref="Sewage Topology" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Modelling" />
+    <prov:entity prov:ref="Rainfall" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Modelling" />
+    <prov:entity prov:ref="Street Cleaning" />
+  </prov:used>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="SWMM Model" />
+    <prov:activity prov:ref="Modelling" />
+  </prov:wasGeneratedBy>
+  <prov:used>
+    <prov:activity prov:ref="Execution" />
+    <prov:entity prov:ref="SWMM Model" />
+  </prov:used>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="Simulations" />
+    <prov:activity prov:ref="Execution" />
+  </prov:wasGeneratedBy>
+  <prov:used>
+    <prov:activity prov:ref="Ground Truthing" />
+    <prov:entity prov:ref="Simulations" />
+  </prov:used>
+  <prov:used>
+    <prov:activity prov:ref="Ground Truthing" />
+    <prov:entity prov:ref="Data File" />
+  </prov:used>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="SWMM Model" />
+    <prov:activity prov:ref="Ground Truthing" />
+  </prov:wasGeneratedBy>
+  <prov:wasAttributedTo>
+    <prov:entity prov:ref="Street Topology Data" />
+    <prov:agent prov:ref="TUD-GIS" />
+  </prov:wasAttributedTo>
+  <prov:wasAttributedTo>
+    <prov:entity prov:ref="Traffic Detector Data" />
+    <prov:agent prov:ref="TUD-VLP" />
+  </prov:wasAttributedTo>
+  <prov:wasAttributedTo>
+    <prov:entity prov:ref="Traffic Data" />
+    <prov:agent prov:ref="TUD-VLP" />
+  </prov:wasAttributedTo>
+  <prov:wasAssociatedWith>
+    <prov:activity prov:ref="Sampling Campaign" />
+    <prov:agent prov:ref="Students" />
+  </prov:wasAssociatedWith>
+  <prov:wasAssociatedWith>
+    <prov:activity prov:ref="Road Pollution Classification" />
+    <prov:agent prov:ref="TUD-SWW" />
+  </prov:wasAssociatedWith>
+  <prov:wasAssociatedWith>
+    <prov:activity prov:ref="Statistical Analysis" />
+    <prov:agent prov:ref="TUD-SWW" />
+  </prov:wasAssociatedWith>
+  <prov:wasAssociatedWith>
+    <prov:activity prov:ref="Modelling" />
+    <prov:agent prov:ref="TUD-SWW" />
+  </prov:wasAssociatedWith>
+  <prov:wasAttributedTo>
+    <prov:entity prov:ref="Measuring Points" />
+    <prov:agent prov:ref="TUD-SWW" />
+  </prov:wasAttributedTo>
+  <prov:wasAssociatedWith>
+    <prov:activity prov:ref="Identify Measuring Points" />
+    <prov:agent prov:ref="TUD-SWW" />
+  </prov:wasAssociatedWith>
+  <prov:wasAttributedTo>
+    <prov:entity prov:ref="Classification Map" />
+    <prov:agent prov:ref="TUD-SWW" />
+  </prov:wasAttributedTo>
+</prov:document>

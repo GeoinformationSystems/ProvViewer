@@ -1,0 +1,143 @@
+<mxGraphModel>
+    <root>
+        <Diagram label="My Diagram" href="http://www.jgraph.com/" id="0">
+            <mxCell/>
+        </Diagram>
+        <Layer label="Default Layer" id="1">
+            <mxCell parent="0"/>
+        </Layer>
+        <DataDMP label="LandUseData" href="" id="7">
+            <mxCell style="dataDMP" vertex="1" parent="1">
+                <mxGeometry x="740" y="41" width="150" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <ProcessDMP label="RoadPollutionClassification" href="" id="8">
+            <mxCell style="processDMP" vertex="1" parent="1">
+                <mxGeometry x="485" y="-40" width="160" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <ProcessDMP label="IdentifyMeasuringPoints" href="" id="9">
+            <mxCell style="processDMP" vertex="1" parent="1">
+                <mxGeometry x="490" y="190" width="160" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <DataDMP label="TrafficData" href="" id="10">
+            <mxCell style="dataDMP" vertex="1" parent="1">
+                <mxGeometry x="740" y="-110" width="150" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="StreetTopologyData" href="" id="11">
+            <mxCell style="dataDMP" vertex="1" parent="1">
+                <mxGeometry x="740" y="130" width="160" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="TrafficDetectorData" href="" id="12">
+            <mxCell style="dataDMP" vertex="1" parent="1">
+                <mxGeometry x="740" y="-40" width="160" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="ClassificationMap" href="" id="13">
+            <mxCell style="dataDMP" vertex="1" parent="1">
+                <mxGeometry x="490" y="60.81967213114754" width="150" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="MeasuringPoints" href="" id="14">
+            <mxCell style="dataDMP" vertex="1" parent="1">
+                <mxGeometry x="210" y="61" width="150" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <ActorDMP label="TUD-SWW" href="" id="17">
+            <mxCell style="actorDMP" vertex="1" parent="1">
+                <mxGeometry x="310" y="-169.56001912960306" width="60" height="50" as="geometry"/>
+            </mxCell>
+        </ActorDMP>
+        <ActorDMP label="TUD-VLP" href="" id="18">
+            <mxCell style="actorDMP" vertex="1" parent="1">
+                <mxGeometry x="960" y="-45.411764705882376" width="60" height="50" as="geometry"/>
+            </mxCell>
+        </ActorDMP>
+        <ActorDMP label="TUD-GIS" href="" id="19">
+            <mxCell style="actorDMP" vertex="1" parent="1">
+                <mxGeometry x="960" y="125" width="60" height="50" as="geometry"/>
+            </mxCell>
+        </ActorDMP>
+        <Connector label="" href="" id="21">
+            <mxCell edge="1" parent="1" source="9" target="14">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="400" y="140"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="22">
+            <mxCell edge="1" parent="1" source="8" target="13">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="23">
+            <mxCell edge="1" parent="1" source="7" target="8">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="24">
+            <mxCell edge="1" parent="1" source="10" target="8">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="25">
+            <mxCell edge="1" parent="1" source="11" target="8">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="26">
+            <mxCell edge="1" parent="1" source="12" target="8">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="27">
+            <mxCell edge="1" parent="1" source="13" target="9">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="28">
+            <mxCell edge="1" parent="1" source="18" target="10">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="29">
+            <mxCell edge="1" parent="1" source="19" target="11">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="30">
+            <mxCell edge="1" parent="1" source="18" target="12">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="31">
+            <mxCell edge="1" parent="1" source="17" target="13">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="32">
+            <mxCell edge="1" parent="1" source="17" target="14">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="33">
+            <mxCell edge="1" parent="1" source="17" target="9">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="34">
+            <mxCell edge="1" parent="1" source="17" target="8">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="430" y="-80"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+    </root>
+</mxGraphModel>

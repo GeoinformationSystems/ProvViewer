@@ -1,0 +1,345 @@
+<mxGraphModel>
+    <root>
+        <Diagram label="My Diagram" href="http://www.jgraph.com/" id="0">
+            <mxCell/>
+        </Diagram>
+        <Layer label="Default Layer" id="1">
+            <mxCell parent="0"/>
+        </Layer>
+        <DataDMP label="Land Use Data" href="" abstract="land use data by the city of Dresden and surrounding" keywords="land use, Dresden" id="7">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="740" y="-10" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <ProcessDMP label="Road Pollution Classification" href="" short_description="classifies roads based on land use, traffic data and street topology" id="8">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="960" y="-110" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <ProcessDMP label="Identify Measuring Points" short_description="identifies measuring points for a sampling campaign based on a classification map" href="" id="9">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="960" y="46" width="160" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <DataDMP label="Traffic Data" href="" abstract="traffic data by the city of Dresden" keywords="traffic, Dresden" id="10">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="740" y="-110" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="Street Topology Data" abstract="street topology data by the city of Dresden" keywords="street, topology, Dresden" href="" id="11">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="740" y="41" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="Traffic Detector Data" abstract="traffic detector data by the city of Dresden" keywords="traffic, detectors, Dresden" href="" id="12">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="740" y="-60" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="Classification Map" abstract="Classification map of the city of Dresden" keywords="classification, map, pollution, detection, Dresden" href="" id="13">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="965" y="-30" width="155" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="Measuring Points" abstract="Measuring points for the sampling campaign of the city of Dresden" keywords="classification, measuring, sampling, Dresden" href="" id="14">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="965" y="121" width="155" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <ActorDMP label="TUD-SWW" href="" name="Thomas Käseberg" institution="Chair of Urban Water Management" mail-address="thomas.kaeseberg@tu-dresden.de" id="17">
+            <mxCell style="actorDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1010" y="-219.56001912960306" width="60" height="50" as="geometry"/>
+            </mxCell>
+        </ActorDMP>
+        <ActorDMP label="TUD-VLP" href="" name="Sven Fröhlich" institution="Chair of Traffic Control and Process Automation" mail-address="sven.froehlich@tu-dresden.de" id="18">
+            <mxCell style="actorDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="630" y="-115.41176470588238" width="60" height="50" as="geometry"/>
+            </mxCell>
+        </ActorDMP>
+        <ActorDMP label="TUD-GI" href="" name="Stephan Mäs" institution="Chair of Geoinformatics" mail-address="stephan.maes@tu-dresden.de" id="19">
+            <mxCell style="actorDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="630" y="36" width="60" height="54" as="geometry"/>
+            </mxCell>
+        </ActorDMP>
+        <Connector label="" href="" id="21">
+            <mxCell parent="1" source="9" target="14" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points"/>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="22">
+            <mxCell parent="1" source="8" target="13" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="23">
+            <mxCell parent="1" source="7" target="8" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="940" y="-40"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="24">
+            <mxCell parent="1" source="10" target="8" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="25">
+            <mxCell parent="1" source="11" target="8" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="940" y="-10"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="26">
+            <mxCell parent="1" source="12" target="8" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="940" y="-40"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="27">
+            <mxCell parent="1" source="13" target="9" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <ProcessDMP label="Sampling Campaign" href="" short_description="based on classified measuring points street pollution sampling are recorded and evaluated" id="35">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1220" y="-30" width="120" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <DataDMP label="Data File" href="" abstract="collection of all data of the sampling campaign with quality management and file refinement" keywords="data collection, sampling data, quality" id="36">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1390" y="-30" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <ActorDMP label="Students" name="N.N." institution="Chair of Urban Water Management" mail-adress="sampling.campaign.sww@tu-dresden.de" href="" id="37">
+            <mxCell style="actorDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1250" y="-110" width="60" height="40" as="geometry"/>
+            </mxCell>
+        </ActorDMP>
+        <ProcessDMP label="File Refinement Quality Management" short_description="refines and assures quality for the sampling campaign data" href="" id="39">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1355" y="-110" width="190" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <ProcessDMP label="Statistical Analysis" short_description="statistical analysis of the sampling campaign data" href="" id="40">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1580" y="-30" width="120" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <ProcessDMP label="Modelling" short_description="use sampling campaign data as refinement for the modelling of the SWMM model" href="" id="41">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1580" y="26" width="120" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <DataDMP label="Time Series" href="" abstract="time series as results of the statistical analysis of the sampling data" keywords="statistical analysis, time series" id="42">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1770" y="-30" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="Sewage Topology" href="" abstract="sewage topology data by the city of Dresden" keywords="sewage, topology, Dresden" id="43">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1770" y="26" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="Rainfall" href="" abstract="rainfall data by local rain collectors or by german weather service" keywords="rainfall, collectors, weather service, Dresden" id="44">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1770" y="140" width="120" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="Street Cleaning" abstract="street cleaning data by the city of Dresden" keywords="street, cleaning, Dresden" href="" id="45">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1770" y="81" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <DataDMP label="SWMM Model" href="" abstract="street totpology data by the city of Dresden" keywords="SWMM, hydrology, Dresden" id="46">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1555" y="101" width="170" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <ProcessDMP label="Execution" href="" short_description="run SWMM model" id="47">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1580" y="180" width="120" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <DataDMP label="Simulations" href="" abstract="simulation results of the SWMM model" keywords="simulation, results, SWMM" id="48">
+            <mxCell style="dataDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1390" y="180" width="120" height="40" as="geometry"/>
+            </mxCell>
+        </DataDMP>
+        <ProcessDMP label="Ground Truthing" href="" short_description="use sampling campaign data to prove simulation results and possibly refine model" id="49">
+            <mxCell style="processDMP" parent="1" xmlns="" vertex="1">
+                <mxGeometry x="1390" y="101" width="120" height="40" as="geometry"/>
+            </mxCell>
+        </ProcessDMP>
+        <Connector label="" href="" id="50">
+            <mxCell parent="1" source="14" target="35" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="1200" y="150"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="51">
+            <mxCell parent="1" source="35" target="36" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="52">
+            <mxCell parent="1" source="36" target="39" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="53">
+            <mxCell parent="1" source="39" target="36" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="54">
+            <mxCell parent="1" source="36" target="40" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="55">
+            <mxCell parent="1" source="36" target="41" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points"/>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="57">
+            <mxCell parent="1" source="40" target="42" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="58">
+            <mxCell parent="1" source="42" target="41" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="59">
+            <mxCell parent="1" source="43" target="41" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="60">
+            <mxCell parent="1" source="44" target="41" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="61">
+            <mxCell parent="1" source="45" target="41" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="62">
+            <mxCell parent="1" source="41" target="46" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="63">
+            <mxCell parent="1" source="46" target="47" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="64">
+            <mxCell parent="1" source="47" target="48" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="65">
+            <mxCell parent="1" source="48" target="49" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="66">
+            <mxCell parent="1" source="36" target="49" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="69">
+            <mxCell parent="1" source="49" target="46" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="71">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="19" target="11" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="72">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="18" target="12" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="73">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="18" target="10" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="74">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="37" target="35" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="75">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="17" target="8" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry"/>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="76">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="17" target="40" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="1640" y="-90"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="77">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="17" target="41" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="1560" y="-60"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="78">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="17" target="14" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="1180" y="-10"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="79">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="17" target="9" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="1160" y="-60"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+        <Connector label="" href="" id="80">
+            <mxCell style="shape=connector;fontSize=10;align=center;verticalAlign=middle;rounded=1;labelBackgroundColor=white;strokeColor=#727675;strokeWidth=1;edgeStyle=elbowEdgeStyle;endArrow=openThin;html=1;dashed=1;jettySize=auto;orthogonalLoop=1;startArrow=oval" parent="1" source="17" target="13" xmlns="" edge="1">
+                <mxGeometry relative="1" as="geometry">
+                    <Array as="points">
+                        <mxPoint x="1140" y="-90"/>
+                    </Array>
+                </mxGeometry>
+            </mxCell>
+        </Connector>
+    </root>
+</mxGraphModel>
