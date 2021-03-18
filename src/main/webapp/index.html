@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="images/DMP/favicon.ico">
 
-    <title>GEOKUR Provenance Editor</title>
+    <title>GEOKUR Provenance Viewer</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -73,6 +73,12 @@
                                     finally {
                                         // Updates the display and fit the graph
                                         editor.graph.getModel().endUpdate();
+                                        var layout = new mxHierarchicalLayout(editor.graph, mxConstants.DIRECTION_WEST, true);
+                                        layout.interHierarchySpacing = 30;
+                                        layout.interRankCellSpacing = 30;
+                                        layout.intraCellSpacing = 30;
+                                        var parent = editor.graph.getDefaultParent();
+                                        layout.execute(parent);
                                         editor.graph.fit();
                                         editor.graph.view.rendering = true;
                                         editor.graph.refresh();
@@ -85,7 +91,7 @@
                         alert("This browser does not support HTML5.");
                     }
                 } else {
-                    alert("Please upload a valid XML file.");
+                    alert("Please upload a valid Turtle file.");
                 }
             });
 
@@ -137,20 +143,11 @@
                     mxEvent.consume(evt);
                 }
             });
-
-            mxEvent.addListener(document.getElementById("loadWFButton"), 'click', function () {
-                editor.execute('open')
-            });
             mxEvent.addListener(document.getElementById("importWFPROVButton"), 'click', function () {
-                console.log("HOIHIHIHHIHI");
                 editor.execute('importPROV');
+
             });
-            mxEvent.addListener(document.getElementById("exportWFGraphButton"), 'click', function () {
-                editor.execute('exportGraph');
-            });
-            mxEvent.addListener(document.getElementById("exportWFPROVButton"), 'click', function () {
-                editor.execute('exportPROV');
-            });
+
             mxEvent.addListener(document.getElementById("plusButton"), 'click', function () {
                 editor.execute('zoomIn');
 
@@ -313,16 +310,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link" id="loadWFButton" href="#">Load SWW Workflow</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" id="importWFPROVButton" href="#">Import from PROV</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="exportWFGraphButton" href="#">Export as Graph</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="exportWFPROVButton" href="#">Export as PROV</a>
                 </li>
             </ul>
         </div>
@@ -370,12 +358,8 @@
                 </div>
             </div>
         </div>
-    </div><!-- /.container -->
-
-    <!--<script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>-->
-    <!--<script src="bootstrap/assets/js/vendor/popper.min.js"></script>-->
+    </div>
     <script src="bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-    <!--<script src="bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>-->
     <script src="js/EditMetadataDialog.js"></script>
 </body>
 

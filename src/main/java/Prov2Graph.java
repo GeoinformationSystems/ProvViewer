@@ -1,20 +1,13 @@
 import org.jdom2.Document;
-import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-import org.jdom2.transform.JDOMResult;
-import org.jdom2.transform.JDOMSource;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.net.URLDecoder;
 
@@ -25,7 +18,6 @@ public class Prov2Graph extends HttpServlet {
      *
      */
     private static final long serialVersionUID = 1L;
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,22 +47,22 @@ public class Prov2Graph extends HttpServlet {
 
                 try {
                     Document doc = new SAXBuilder().build(new StringReader(xml));
-                    
+
                     // Source xmlFile = new JDOMSource(doc);
                     // JDOMResult provResult = new JDOMResult();
-                    // Transformer transformer = TransformerFactory.newInstance().newTransformer(new StreamSource(
-                    //         String.valueOf(getClass().getClassLoader().getResource("Prov2Graph.xsl"))));
+                    // Transformer transformer = TransformerFactory.newInstance().newTransformer(new
+                    // StreamSource(
+                    // String.valueOf(getClass().getClassLoader().getResource("Prov2Graph.xsl"))));
                     // transformer.transform(xmlFile, provResult);
 
-
-                    
                     response.setContentType("text/plain");
                     response.setHeader("Content-Disposition",
                             "attachment; filename=\"" + filename + "\"; filename*=UTF-8''" + filename);
                     response.setStatus(HttpServletResponse.SC_OK);
                     OutputStream out = response.getOutputStream();
                     new XMLOutputter(Format.getPrettyFormat()).output(doc, out);
-                    // new XMLOutputter(Format.getPrettyFormat()).output(provResult.getDocument(), out);
+                    // new XMLOutputter(Format.getPrettyFormat()).output(provResult.getDocument(),
+                    // out);
                     out.flush();
                     out.close();
                 } catch (Exception e) {
