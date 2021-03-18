@@ -299,11 +299,11 @@
 	</mxGraph>
 	<mxDefaultToolbar as="toolbar">
 		<add as="pan" mode="pan" icon="images/pan.gif"/>
-		<add as="connect" mode="connect" icon="images/DMP/Arrow_1noWS.svg"/>
-		<add as="Data" template="dataDMP" style="dataDMP" icon="images/DMP/Data_1noWS.svg"/>
-		<br/><br/>
+		<!-- <add as="connect" mode="connect" icon="images/DMP/Arrow_1noWS.svg"/> -->
+		<!-- <add as="Data" template="dataDMP" style="dataDMP" icon="images/DMP/Data_1noWS.svg"/> -->
+		<!-- <br/><br/>
 		<add as="Process" template="processDMP" style="processDMP" icon="images/DMP/Process_1noWS.svg"/>
 		<br/><br/>
-		<add as="Actor" template="actorDMP" style="actorDMP" icon="images/DMP/Actor_1noWS.svg"/>
+		<add as="Actor" template="actorDMP" style="actorDMP" icon="images/DMP/Actor_1noWS.svg"/> -->
 	</mxDefaultToolbar>
 </mxEditor>

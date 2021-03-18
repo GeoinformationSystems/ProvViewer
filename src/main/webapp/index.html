@@ -103,7 +103,7 @@
 
             mxConnectionHandler.prototype.connectImage = new mxImage('images/DMP/right-arrow.png', 16, 16);
 
-            editor.graph.setConnectable(true);
+            editor.graph.setConnectable(false);
             editor.graph.setConnectableEdges(false);
             editor.graph.setAllowDanglingEdges(false);
             editor.graph.setDisconnectOnMove(false);
@@ -170,18 +170,6 @@
                 editor.graph.refresh();
             });
 
-            mxEvent.addListener(document.getElementById("organicButton"), 'click', function () {
-                var layout = new mxFastOrganicLayout(editor.graph);
-                layout.forceConstant = 150;
-                layout.disableEdgeStyle = true;
-                layout.resetEdges = true;
-                var parent = editor.graph.getDefaultParent();
-                layout.execute(parent);
-                editor.graph.fit();
-                editor.graph.view.rendering = true;
-                editor.graph.refresh();
-            });
-
             editor.graph.addListener(mxEvent.LABEL_CHANGED, function (sender, evt) {
                 editor.graph.refresh();
                 editor.graph.updateCellSize(evt.properties.cell);
@@ -218,6 +206,8 @@
                     edge.style = array.join(';');
                 }
             });
+
+
 
             editor.graph.flipEdge = function (edge) {
                 if (edge != null) {
@@ -319,17 +309,9 @@
     <div class="container-fluid fill">
         <div id="workflow_content">
             <div class="row">
-                <div class="col-2" id="toolsandzoom">
-                    <div id="aroundtoolbar">
-                        <div id="toolbarHeading">
-                            Available Shapes
-                            <hr>
-                        </div>
-
-                        <div id="toolbar"></div>
-                    </div>
+                <div id="toolbar">
                 </div>
-                <div class="col-10" id="editorarea">
+                <div class="col-12" id="editorarea">
                     <div id="aroundgraph">
                         <div id="graph" tabindex="-1">
                             <center id="splash" style="padding-top:230px;">
@@ -346,12 +328,8 @@
                                 class="fa fa-arrows-alt"></span></button>
                     </div>
                     <div id="layoutActions">
-                        Autolayout: &nbsp;
                         <button type="button" id="hierarchicalButton" href="#" class="btn btn-light btn-sm"><span
-                                class="fa fa-sitemap"></span>&nbsp;Hierarchical
-                        </button>
-                        <button type="button" id="organicButton" href="#" class="btn btn-light btn-sm"><span
-                                class="fa fa-random"></span>&nbsp;Organical
+                                class="fa fa-sitemap"></span>&nbsp;Autolayout
                         </button>
 
                     </div>
