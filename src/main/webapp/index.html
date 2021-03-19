@@ -308,10 +308,29 @@
 
     <div class="container-fluid fill">
         <div id="workflow_content">
+            <div id="toolbar">
+            </div>
             <div class="row">
-                <div id="toolbar">
+
+                <div class="col-2" id="selection">
+                    <div id="aroundselection">
+                        <button type="button" id="getDatasets" href="#" class="btn btn-light btn-sm">
+                            Get Datasets
+                        </button>
+                        <select id="selectionBox" size="10">
+                            <option>Heino</option>
+                            <option>Michael Jackson</option>
+                            <option>Tom Waits</option>
+                            <option>Nina Hagen</option>
+                            <option>Marianne Rosenberg</option>
+                        </select>
+                        <input id="provLength" type="number">
+                        <button type="button" id="addToCanvas" href="#" class="btn btn-light btn-sm">
+                            Add To Canvas
+                        </button>
+                    </div>
                 </div>
-                <div class="col-12" id="editorarea">
+                <div class="col-10" id="editorarea">
                     <div id="aroundgraph">
                         <div id="graph" tabindex="-1">
                             <center id="splash" style="padding-top:230px;">
