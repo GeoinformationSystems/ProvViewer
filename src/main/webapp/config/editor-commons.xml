@@ -9,17 +9,9 @@
         <!-- <separator if="cell"/>
         <add as="properties" action="editMetadata" icon="images/DMP/font-selection-editor.png" if="cell"/>
         <separator if="cell"/> -->
-        <!-- <add as="delete" action="delete" icon="images/DMP/double-sided-eraser.png" if="cell"/> -->
+        <add as="delete" action="delete" icon="images/DMP/double-sided-eraser.png" if="cell"/>
 
     </mxDefaultPopupMenu>
     <include name="config/keyhandler-commons.xml"/>
-    <Array as="actions">
-        <add as="importPROV"><![CDATA[
-			function(editor){
-				$('#uploadModal').modal('show');
-			}
-		]]>
-        </add>
 
-    </Array>
 </mxEditor>
