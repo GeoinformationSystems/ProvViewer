@@ -18,7 +18,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <script src="jquery/jquery-3.3.1.min.js"></script>
 
-    
+
     <script type="text/javascript">
         var mxBasePath = 'mxgraph';
 
@@ -91,14 +91,18 @@
 
                 <div class="col-2" id="selection">
                     <div id="aroundselection">
+                        <p>SPARQL Endpoint</p>
+                        <input id="endpoint" type="string" value="http://172.26.62.72:8080/fuseki/provenance_graph_example">
                         <button type="button" id="getDatasets" href="#" class="btn btn-light btn-sm">
                             Get Datasets
                         </button>
                         <select id="selectionBox" size="10">
                         </select>
-                        <input id="provLength" type="number" value = "3">
-                        <input type="button" id="addToCanvas" class="btn btn-light btn-sm" data-dismiss="modal" value="Add to Canvas">
-                        <input type="button" id="addToCanvas2" class="btn btn-light btn-sm" data-dismiss="modal" value="Add to Canvas 2">
+                        <input id="provLength" type="number" value="1">
+                        <input type="button" id="addToCanvas" class="btn btn-light btn-sm" data-dismiss="modal"
+                            value="Add to Canvas">
+                        <input type="button" id="addToCanvas2" class="btn btn-light btn-sm" data-dismiss="modal"
+                            value="Add to Canvas 2">
                     </div>
                 </div>
                 <div class="col-10" id="editorarea">
