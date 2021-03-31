@@ -136,10 +136,21 @@ function onInit(editor) {
                 if (data == null)
                     return;
 
+                x_old = cell.geometry.x;
+                y_old = cell.geometry.y;
+                scale_old = editor.graph.getView().getScale();
+                translate_old_x = editor.graph.view.translate.x;
+                translate_old_y = editor.graph.view.translate.y;
+                
+                updateCanvas(editor, data)                
 
-
-                updateCanvas(editor, data)
-
+                x_new = editor.graph.model.getCell(cell.id).geometry.x
+                y_new = editor.graph.model.getCell(cell.id).geometry.y
+                x_diff = x_new - x_old;
+                y_diff = y_new - y_old;
+                
+                editor.graph.view.scaleAndTranslate(scale_old, translate_old_x - x_diff, translate_old_y - y_diff)
+                editor.graph.view.rendering = true;
             }
         });
     });
