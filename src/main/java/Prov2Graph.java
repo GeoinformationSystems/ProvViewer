@@ -75,8 +75,8 @@ public class Prov2Graph extends HttpServlet {
 				}
 
 				query = String.format(
-						"SELECT ?entity ?activity WHERE {?entity <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity. ?activity <http://www.w3.org/ns/prov#used> <%s>. }",
-						entityName);
+						"SELECT ?entity ?activity WHERE {?entity <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity. ?activity <http://www.w3.org/ns/prov#used> <%s>. ?entity  <http://www.w3.org/ns/prov#wasDerivedFrom> <%s>.}",
+						entityName, entityName);
 				try (QueryExecution q = QueryExecutionFactory.sparqlService(serviceURI, query)) {
 					ResultSet results = q.execSelect();
 					while (results.hasNext()) {
@@ -89,8 +89,8 @@ public class Prov2Graph extends HttpServlet {
 				}
 
 				query = String.format(
-						"SELECT ?entity ?activity WHERE {<%s> <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity. ?activity <http://www.w3.org/ns/prov#used> ?entity.  }",
-						entityName);
+						"SELECT ?entity ?activity WHERE {<%s> <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity. ?activity <http://www.w3.org/ns/prov#used> ?entity. <%s>  <http://www.w3.org/ns/prov#wasDerivedFrom> ?entity.}",
+						entityName, entityName);
 				try (QueryExecution q = QueryExecutionFactory.sparqlService(serviceURI, query)) {
 					ResultSet results = q.execSelect();
 					while (results.hasNext()) {
@@ -162,7 +162,7 @@ public class Prov2Graph extends HttpServlet {
 				RDFNode x = soln.get("s");
 
 				String s = x.toString();
-				int sLength = s.length() * 5 + 10;
+				int sLength = s.length() * 7 + 10;
 				Element processDMP = new Element("ProcessDMP").setAttribute("label", s).setAttribute("id", s)
 						.addContent(new Element("mxCell").setAttribute("style", "processDMP")
 								.setAttribute("vertex", "1").setAttribute("parent", "1")
@@ -554,23 +554,32 @@ public class Prov2Graph extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Model model;
+		Boolean destroySession = Boolean.parseBoolean(request.getParameter("destroySession"));
+
 		HttpSession session = request.getSession();
+		if (destroySession) {
+			session.invalidate();
+			session = request.getSession();
+		}
+		System.out.println();
+		System.out.println("Session:");
+		System.out.println(session.getId());
 		if (session.getAttribute("model") != null) {
+			System.out.println("load existing model");
 			model = (Model) session.getAttribute("model");
 		} else {
+			System.out.println("create default model");
 			model = ModelFactory.createDefaultModel();
 		}
 		try {
 
 			String entityName = request.getParameter("entityName");
 			String endpoint = request.getParameter("endpoint");
-			System.out.println("endpoint");
-			System.out.println(endpoint);
 			int pathLen = Integer.parseInt(request.getParameter("pathLen"));
 			Set<String> entities = new LinkedHashSet();
 			entities.add(entityName);
-			model = constructSubGraph(model, endpoint, entities,
-					pathLen);
+			model = constructSubGraph(model, endpoint, entities, pathLen);
+			session.setAttribute("model", model);
 			Document doc = prov2mxGraph(model);
 			response.setContentType("text/plain");
 			response.setHeader("Content-Disposition", "attachment");
@@ -582,7 +591,6 @@ public class Prov2Graph extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("dsff");
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

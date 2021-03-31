@@ -71,7 +71,7 @@
     <!--<body>-->
     <nav class="navbar  navbar-expand-md navbar-light bg-dark fixed-top">
         <a class="navbar-brand" href="#">
-            <img src="images/DMP/logo_greenish.svg" height="40">&nbsp;<span id="sitetitle"></span></a>
+            <img src="images/DMP/pale_logo.svg" height="40">&nbsp;<span id="sitetitle"></span></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,11 +85,11 @@
 
     <div class="container-fluid fill">
         <div id="workflow_content">
-            <div id="toolbar">
-            </div>
+            
             <div class="row">
 
                 <div class="col-2" id="selection">
+                    <div id="toolbar" style="visibility: hidden"></div>
                     <div id="aroundselection">
                         <p>SPARQL Endpoint</p>
                         <input id="endpoint" type="string" value="http://172.26.62.72:8080/fuseki/provenance_graph_example">
@@ -98,17 +98,17 @@
                         </button>
                         <select id="selectionBox" size="10">
                         </select>
-                        <input id="provLength" type="number" value="1">
+                        <!-- <input id="provLength" type="number" value="1"> -->
                         <input type="button" id="addToCanvas" class="btn btn-light btn-sm" data-dismiss="modal"
-                            value="Add to Canvas">
-                        <input type="button" id="addToCanvas2" class="btn btn-light btn-sm" data-dismiss="modal"
-                            value="Add to Canvas 2">
+                            value="Begin New Provenance Graph">
+                        <input type="button" id="addToGraph" class="btn btn-light btn-sm" data-dismiss="modal"
+                        value="Add To Provenance Graph">
                     </div>
                 </div>
                 <div class="col-10" id="editorarea">
                     <div id="aroundgraph">
                         <div id="graph" tabindex="-1">
-                            <center id="splash" style="padding-top:230px;">
+                            <center id="splash" style="padding-top:200px;">
                                 <img src="images/loading.gif">
                             </center>
                         </div>

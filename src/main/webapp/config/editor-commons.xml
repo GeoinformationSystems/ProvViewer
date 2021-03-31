@@ -9,9 +9,10 @@
         <!-- <separator if="cell"/>
         <add as="properties" action="editMetadata" icon="images/DMP/font-selection-editor.png" if="cell"/>
         <separator if="cell"/> -->
-        <add as="delete" action="delete" icon="images/DMP/double-sided-eraser.png" if="cell"/>
-
+        <!-- <add as="delete" action="delete" icon="images/DMP/double-sided-eraser.png" if="cell"/> -->
+        <add as="Go To Dataset Page" action="goToResource"/>
+        <add as="Expand Dataset" action="expandCell"/>
+        <!-- <add as="Expand" action="expand"/> -->
     </mxDefaultPopupMenu>
     <include name="config/keyhandler-commons.xml"/>
-
 </mxEditor>

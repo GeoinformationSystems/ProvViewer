@@ -209,24 +209,25 @@
 			</add>
 			<add as="actorDMP">
 				<add as="shape" value="actorDMP"/>
-				<add as="strokeColor" value="#727675"/>
-				<add as="fillColor" value="#AFA0CA"/>
+				<add as="strokeColor" value="#f0f76e"/>
+				<add as="fillColor" value="#f0f76e"/>
 				<add as="minHeight" value="40"/>
 				<add as="minWidth" value="40"/>
 			</add>
 			<add as="dataDMP">
 				<add as="shape" value="dataDMP"/>
-				<add as="strokeColor" value="#727675"/>
-				<add as="fillColor" value="#B0DBB0"/>
+				<add as="strokeColor" value="#00000000"/>
+				<add as="fillColor" value="#fd7772"/>
 				<add as="minHeight" value="40"/>
 				<add as="minWidth" value="120"/>
 			</add>
 			<add as="processDMP">
 				<add as="shape" value="processDMP"/>
-				<add as="strokeColor" value="#727675"/>
-				<add as="fillColor" value="#F9DAA4"/>
+				<add as="strokeColor" value="#07438d"/>
+				<add as="fillColor" value="#07438d"/>
 				<add as="minHeight" value="40"/>
 				<add as="minWidth" value="120"/>
+				<add as="fontColor" value="#eeeeee"/>
 			</add>
 			<add as="cloud">
 				<add as="shape" value="cloud"/>
@@ -298,7 +299,7 @@
 		</mxGraphModel>
 	</mxGraph>
 	<mxDefaultToolbar as="toolbar">
-		<add as="pan" mode="pan" icon="images/pan.gif"/>
+		<add as="pan" mode="pan"/>
 		<!-- <add as="connect" mode="connect" icon="images/DMP/Arrow_1noWS.svg"/> -->
 		<!-- <add as="Data" template="dataDMP" style="dataDMP" icon="images/DMP/Data_1noWS.svg"/> -->
 		<!-- <br/><br/>
