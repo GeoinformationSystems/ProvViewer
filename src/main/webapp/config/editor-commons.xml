@@ -3,16 +3,8 @@
         <resource basename="resources/app"/>
     </ui>
     <mxDefaultPopupMenu as="popupHandler">
-        <!-- <add as="cut" action="cut" icon="images/DMP/cut.png"/> -->
-        <!-- <add as="copy" action="copy" icon="images/DMP/copy-document.png"/> -->
-        <!-- <add as="paste" action="paste" icon="images/DMP/paste-from-clipboard.png"/> -->
-        <!-- <separator if="cell"/>
-        <add as="properties" action="editMetadata" icon="images/DMP/font-selection-editor.png" if="cell"/>
-        <separator if="cell"/> -->
-        <!-- <add as="delete" action="delete" icon="images/DMP/double-sided-eraser.png" if="cell"/> -->
-        <add as="Go To Dataset Page" action="goToResource"/>
-        <add as="Expand Dataset" action="expandCell"/>
-        <!-- <add as="Expand" action="expand"/> -->
+        <add as="Go To Resource Page" action="goToResource"/>
+        <add as="Expand Resource" action="expandCell"/>
     </mxDefaultPopupMenu>
     <include name="config/keyhandler-commons.xml"/>
 </mxEditor>

@@ -66,7 +66,7 @@ function updateCanvas(editor, data) {
 }
 
 function onInit(editor) {
-    $("#addToCanvas").bind("click", function (e) {
+    $("#newGraph").bind("click", function (e) {
         $.ajax({
             type: 'POST',
             url: "./importPROV",
