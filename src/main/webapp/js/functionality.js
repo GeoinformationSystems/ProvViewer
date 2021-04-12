@@ -1,3 +1,4 @@
+var mouseIsOverCanvas = false;
 
 $(document).ready(function () {
     $("#getDatasets").bind("click", function () {
@@ -39,6 +40,15 @@ $(document).ready(function () {
 
             }
         });
+    });
+        
+    $("#editorarea").bind({
+        mouseenter: function(){
+            mouseIsOverCanvas = true;
+        },
+        mouseleave: function(){
+            mouseIsOverCanvas = false;
+        }
     });
 });
 
@@ -105,6 +115,7 @@ function onInit(editor) {
             }
         });
     });
+    
 
     mxVertexHandler.prototype.rotationEnabled = false;
     mxGraphHandler.prototype.guidesEnabled = true;
@@ -172,16 +183,21 @@ function onInit(editor) {
     }
 
     mxEvent.addMouseWheelListener(function (evt, up) {
+        
+        
         if (!mxEvent.isConsumed(evt)) {
-            if (up) {
-                editor.execute('zoomIn');
-            }
-            else {
-                editor.execute('zoomOut');
+            if (mouseIsOverCanvas){
+                if (up) {
+                    editor.execute('zoomIn');
+                }
+                else {
+                    editor.execute('zoomOut');
+                }
             }
 
             mxEvent.consume(evt);
-        }
+        }  
+        
     });
     mxEvent.addListener(document.getElementById("plusButton"), 'click', function () {
         editor.execute('zoomIn');
