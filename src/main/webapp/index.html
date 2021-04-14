@@ -47,71 +47,53 @@
 
 <body onload="createEditor('config/diagrameditor.xml');">
 
-    <!-- Modal -->
-    <div id="editMetadataModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Metadata</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-
-                </div>
-                <div class="modal-body">
-                    <div id="editMetadataContent"></div>
-                </div>
-                <div id="editMetadataFooter" class="modal-footer">
-
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!--<body>-->
-    <nav class="navbar  navbar-expand-md navbar-light bg-dark fixed-top">
+    <nav class="navbar bg-dark fixed-top">
         <a class="navbar-brand" href="#">
-            <img src="images/DMP/pale_logo.svg" height="40">&nbsp;<span id="sitetitle"></span></a>
+            <img src="images/DMP/pale_logo.svg" height="40px">&nbsp;<span id="sitetitle"></span>
+        </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-            </ul>
-        </div>
+
     </nav>
 
     <div class="container-fluid fill">
         <div id="workflow_content">
-            
             <div class="row">
+                <div class="col-12" id="toolbar" style="visibility: hidden"></div>
+            </div>
 
-                <div class="col-2" id="selection">
-                    <div id="toolbar" style="visibility: hidden"></div>
-                    <div id="aroundselection">
-                        <p>SPARQL Endpoint</p>
-                        <input id="endpoint" type="string" value="http://172.26.62.72:8080/fuseki/provenance_graph_example">
-                        <button type="button" id="getDatasets" href="#" class="btn btn-light btn-sm">
-                            Get Datasets
-                        </button>
-                        <select id="selectionBox" size="10">
-                        </select>
-                        <!-- <input id="provLength" type="number" value="1"> -->
-                        <input type="button" id="newGraph" class="btn btn-light btn-sm" data-dismiss="modal"
-                            value="Begin New Provenance Graph">
-                        <input type="button" id="addToGraph" class="btn btn-light btn-sm" data-dismiss="modal"
-                        value="Add To Provenance Graph">
-                    </div>
+            <div class="row" id="selection">
+                <div class="col-4">
+                    Enter SPARQL Endpoint:
+                    <br>
+                    <input class="form-control" id="endpoint" type="string"
+                        value="http://172.26.62.72:8080/fuseki/provenance_graph_example">
+
                 </div>
-                <div class="col-10" id="editorarea">
-                    <div id="aroundgraph">
-                        <div id="graph" tabindex="-1">
-                            <center id="splash" style="padding-top:200px;">
-                                <img src="images/loading.gif">
-                            </center>
-                        </div>
+                <div class="col-1.5">
+                    <br>
+                    <input type="button" id="getDatasets" class="btn btn-primary" value="Refresh Datasets">
+                </div>
+
+                <div class="col-4">
+                    Select Dataset:<br>
+                    <select class="form-control" id="selectionBox"></select>
+                </div>
+                <div class="col-2.5">
+                    <br>
+                    <input type="button" id="newGraph" class="btn btn-primary" data-dismiss="modal"
+                        value="New Provenance Graph">
+
+                    <input type="button" id="addToGraph" class="btn btn-primary" data-dismiss="modal"
+                        value="Add To Provenance Graph">
+                </div>
+            </div>
+            <div class="row" id="editorarea">
+                <div class="col-12" id="aroundgraph">
+                    <div id="graph" tabindex="-1">
+                        <center id="splash" style="padding-top:200px;">
+                            <img src="images/loading.gif">
+                        </center>
                     </div>
                     <div id="zoomActions">
                         <button type="button" id="plusButton" href="#" class="btn btn-light btn-sm"><span
