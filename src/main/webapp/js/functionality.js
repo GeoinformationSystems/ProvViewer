@@ -1,7 +1,9 @@
 var mouseIsOverCanvas = false;
 
 $(document).ready(function () {
+
     getDatasets();
+    // setTimeout(() => processURLparams(), 1000);
     $("#getDatasets").bind("click", getDatasets);
 
     $("#editorarea").bind({
@@ -12,7 +14,53 @@ $(document).ready(function () {
             mouseIsOverCanvas = false;
         }
     });
+
 });
+
+function processURLparams() {
+    var parameters = (function (queryString = document.location.search) {
+        var dictionary = {};
+        // remove the '?' from the beginning of the
+        // if it exists
+        if (queryString.indexOf('?') === 0) {
+            queryString = queryString.substr(1);
+        }
+
+        // Step 1: separate out each key/value pair
+        var parts = queryString.split('&');
+
+        for (var i = 0; i < parts.length; i++) {
+            var p = parts[i];
+            // Step 2: Split Key/Value pair
+            var keyValuePair = p.split('=');
+
+            // Step 3: Add Key/Value pair to Dictionary object
+            var key = keyValuePair[0];
+            var value = keyValuePair[1];
+
+            // decode URI encoded string
+            value = decodeURIComponent(value);
+            value = value.replace(/\+/g, ' ');
+
+            dictionary[key] = value;
+        }
+
+        // Step 4: Return Dictionary Object
+        return dictionary;
+    })();
+
+    if (parameters["endpoint"]) {
+        document.getElementById("endpoint").value = parameters["endpoint"];
+    }
+    if (parameters["dataset"]) {
+        datasetId = String(parameters["dataset"]);
+        document.getElementById(datasetId).selected = true;
+    }
+    if (parameters["endpoint"] && parameters["dataset"]) {
+        $("#newGraph").click();
+    }
+
+}
 
 function getDatasets() {
     var endpointUrl = document.getElementById("endpoint").value;
@@ -38,11 +86,10 @@ function getDatasets() {
         // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
 
         let results = data["results"]["bindings"];
-        console.log(results);
         let select = document.getElementById("selectionBox");
         for (let i = 0; i < results.length; i++) {
             option = document.createElement("option")
-            option.value = (results[i]["entity"]["value"]);
+            option.value = option.id = (results[i]["entity"]["value"]);
             if (results[i]["entityTitle"] != null) {
                 option.text = (results[i]["entityTitle"]["value"]);
             } else {
@@ -52,6 +99,7 @@ function getDatasets() {
             selectionBox.add(option);
 
         }
+        processURLparams()
     });
 }
 
@@ -74,7 +122,7 @@ function updateCanvas(editor, data) {
         layout.execute(parent);
         editor.graph.fit();
         // shift graph to mid of editor area 
-        var translate = ($('#editorarea').height() / (2*editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
+        var translate = ($('#editorarea').height() / (2 * editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
         editor.graph.view.setTranslate(0, translate)
         editor.graph.view.rendering = true;
         editor.graph.refresh();
@@ -83,6 +131,7 @@ function updateCanvas(editor, data) {
 
 function onInit(editor) {
     $("#newGraph").bind("click", function (e) {
+        // console.log(document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value)
         $.ajax({
             type: 'POST',
             url: "./importPROV",
@@ -216,8 +265,8 @@ function onInit(editor) {
     mxEvent.addListener(document.getElementById("fitButton"), 'click', function () {
         editor.execute('fit')
         // shift graph to mid of editor area 
-        var translate = ($('#editorarea').height() / (2*editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
-        editor.graph.view.setTranslate(0, translate)
+        // var translate = ($('#editorarea').height() / (2*editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
+        // editor.graph.view.setTranslate(-editor.graph.view.getGraphBounds().x, translate)
     });
     mxEvent.addListener(document.getElementById("hierarchicalButton"), 'click', function () {
         var layout = new mxHierarchicalLayout(editor.graph, mxConstants.DIRECTION_WEST, true);
@@ -229,7 +278,7 @@ function onInit(editor) {
         editor.graph.fit();
         editor.graph.refresh();
         // shift graph to mid of editor area 
-        var translate = ($('#editorarea').height() / (2*editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
+        var translate = ($('#editorarea').height() / (2 * editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
         editor.graph.view.setTranslate(0, translate)
         editor.graph.view.rendering = true;
 

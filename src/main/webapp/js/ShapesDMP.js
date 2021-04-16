@@ -5,11 +5,8 @@
     function ActorShapeDMP() {
         mxActor.call(this);
     };
-
     mxUtils.extend(ActorShapeDMP, mxActor);
-
-    ActorShapeDMP.prototype.size = 3 / 8;
-
+    ActorShapeDMP.prototype.size = 0.1;
     ActorShapeDMP.prototype.redrawPath = function (c, x, y, w, h) {
         var s = h * Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'size', this.size))));
         var arcSize = mxUtils.getValue(this.style, mxConstants.STYLE_ARCSIZE, mxConstants.LINE_ARCSIZE) / 2;
@@ -17,7 +14,6 @@
             new mxPoint(0, s)], this.isRounded, arcSize, true);
         c.end();
     };
-
     mxCellRenderer.prototype.defaultShapes['actorDMP'] = ActorShapeDMP;
 
 
@@ -36,7 +32,6 @@
     {
         mxRectangleShape.prototype.paintForeground.apply(this, arguments);
     };
-
     mxCellRenderer.prototype.defaultShapes['dataDMP'] = DataShapeDMP;
 
 
@@ -49,7 +44,6 @@
     ProcessShapeDMP.prototype.size = 0.1;
     ProcessShapeDMP.prototype.redrawPath = function(c, x, y, w, h)
     {
-
         var dx = Math.min(w, h / 2);
         c.moveTo(dx, 0);
         c.lineTo(w - dx, 0);
@@ -59,18 +53,7 @@
         c.lineTo(0, h/2);
         c.close();
         c.end();
-
     };
-    // ProcessShapeDMP.prototype.getLabelBounds = function (rect)
-    // {
-    //     var w = rect.width;
-    //     var h = rect.height;
-    //     var r = new mxRectangle(rect.x - h/2, rect.y, w - h/2, h);
-
-    //     return r;
-        
-    // }
-
     mxCellRenderer.prototype.defaultShapes['processDMP'] = ProcessShapeDMP;
 
 })();
