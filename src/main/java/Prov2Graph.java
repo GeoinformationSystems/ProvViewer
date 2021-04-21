@@ -42,14 +42,14 @@ public class Prov2Graph extends HttpServlet {
 	**/
 	private static final long serialVersionUID = 1L;
 
-	public static Model constructSubGraph(Model model, String serviceURI, Set<String> entityNames, int length)
+	public static Model constructSubGraph(Model model, String serviceURI, Set<String> entityIds, int length)
 			throws IOException {
 
 		String PROV = "http://www.w3.org/ns/prov#";
 		model.setNsPrefix("prov", PROV);
 		while (length > 0) {
-			for (String entityName : entityNames) {
-				Resource entity = model.createResource(entityName);
+			for (String entityId : entityIds) {
+				Resource entity = model.createResource(entityId);
 				entity.addProperty(RDF.type, model.createResource(PROV + "Entity"));
 				String query;
 
@@ -60,7 +60,7 @@ public class Prov2Graph extends HttpServlet {
 
 				query = String.format(
 						"SELECT ?activity WHERE {<%s> <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity}",
-						entityName);
+						entityId);
 				try (QueryExecution wasGeneratedByQ = QueryExecutionFactory.sparqlService(serviceURI, query)) {
 					ResultSet wasGeneratedByResults = wasGeneratedByQ.execSelect();
 					while (wasGeneratedByResults.hasNext()) {
@@ -72,7 +72,7 @@ public class Prov2Graph extends HttpServlet {
 				}
 
 				query = String.format("SELECT ?activity WHERE {?activity <http://www.w3.org/ns/prov#used> <%s>. }",
-						entityName);
+						entityId);
 				try (QueryExecution usedQ = QueryExecutionFactory.sparqlService(serviceURI, query)) {
 					ResultSet usedResults = usedQ.execSelect();
 					while (usedResults.hasNext()) {
@@ -85,7 +85,7 @@ public class Prov2Graph extends HttpServlet {
 
 				query = String.format(
 						"SELECT ?entity ?activity ?sourceEntity WHERE {?entity <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity. ?activity <http://www.w3.org/ns/prov#used> <%s>. ?entity  <http://www.w3.org/ns/prov#wasDerivedFrom> <%s>. ?entity <http://www.w3.org/ns/prov#wasDerivedFrom> ?sourceEntity. ?activity <http://www.w3.org/ns/prov#used> ?sourceEntity. }",
-						entityName, entityName);
+						entityId, entityId);
 				try (QueryExecution q = QueryExecutionFactory.sparqlService(serviceURI, query)) {
 					ResultSet results = q.execSelect();
 					while (results.hasNext()) {
@@ -94,18 +94,18 @@ public class Prov2Graph extends HttpServlet {
 						solnEntity.addProperty(model.createProperty(PROV + "wasGeneratedBy"), soln.getResource("activity"));
 						solnEntity.addProperty(model.createProperty(PROV + "wasDerivedFrom"), entity);
 						solnEntity.addProperty(RDF.type, model.createResource(PROV + "Entity"));
-						entityNames.add(soln.get("entity").toString());						
+						entityIds.add(soln.get("entity").toString());						
 						Resource solnSourceEntity = model.createResource(soln.get("sourceEntity").toString());
 						model.createResource(soln.getResource("activity").toString()).addProperty(model.createProperty(PROV + "used"), solnSourceEntity);
 						model.createResource(soln.getResource("entity").toString()).addProperty(model.createProperty(PROV + "wasDerivedFrom"), solnSourceEntity);
 						solnSourceEntity.addProperty(RDF.type, model.createResource(PROV + "Entity"));
-						entityNames.add(soln.get("sourceEntity").toString());
+						entityIds.add(soln.get("sourceEntity").toString());
 					}
 				}
 
 				query = String.format(
 						"SELECT ?entity ?activity WHERE {<%s> <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity. ?activity <http://www.w3.org/ns/prov#used> ?entity. <%s>  <http://www.w3.org/ns/prov#wasDerivedFrom> ?entity.}",
-						entityName, entityName);
+						entityId, entityId);
 				try (QueryExecution q = QueryExecutionFactory.sparqlService(serviceURI, query)) {
 					ResultSet results = q.execSelect();
 					while (results.hasNext()) {
@@ -115,15 +115,12 @@ public class Prov2Graph extends HttpServlet {
 						Resource t = model.createResource(soln.get("entity").toString());
 						s.addProperty(model.createProperty(PROV + "used"), t);
 						t.addProperty(RDF.type, model.createResource(PROV + "Entity"));
-						entityNames.add(soln.get("entity").toString());
+						entityIds.add(soln.get("entity").toString());
 					}
 				}
 			}
 			length -= 1;
 		}
-		// for (String name : entityNames) {
-		// System.out.println(name);
-		// }
 		return model;
 	}
 
@@ -154,7 +151,7 @@ public class Prov2Graph extends HttpServlet {
 
 			while (dataResults.hasNext()) {
 				QuerySolution soln = dataResults.nextSolution();
-				String entityId = soln.get("s").toString();
+				String entityId = soln.get("entity").toString();
 				// nameLength determines node extent in visualization 
 				int nameLength = entityId.length() * 6 + 10;
 				Element dataDMP = new Element("DataDMP")
@@ -394,12 +391,11 @@ public class Prov2Graph extends HttpServlet {
 			model = ModelFactory.createDefaultModel();
 		}
 		try {
-
-			String entityName = request.getParameter("entityName");
+			String entityId = request.getParameter("entityId");
 			String endpoint = request.getParameter("endpoint");
 			int pathLen = Integer.parseInt(request.getParameter("pathLen"));
 			Set<String> entities = new LinkedHashSet();
-			entities.add(entityName);
+			entities.add(entityId);
 			model = constructSubGraph(model, endpoint, entities, pathLen);
 			session.setAttribute("model", model);
 			Document doc = prov2mxGraph(model, endpoint);

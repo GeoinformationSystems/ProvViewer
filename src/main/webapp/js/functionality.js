@@ -136,7 +136,7 @@ function onInit(editor) {
             type: 'POST',
             url: "./importPROV",
             data: {
-                'entityName': document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value,
+                'entityId': document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value,
                 'pathLen': '1',
                 'endpoint': document.getElementById("endpoint").value,
                 'destroySession': 'true'
@@ -156,7 +156,7 @@ function onInit(editor) {
             type: 'POST',
             url: "./importPROV",
             data: {
-                'entityName': document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value,
+                'entityId': document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value,
                 'pathLen': '1',
                 'endpoint': document.getElementById("endpoint").value,
                 'destroySession': 'false'
@@ -194,7 +194,7 @@ function onInit(editor) {
             type: 'POST',
             url: "./importPROV",
             data: {
-                'entityName': cell.id,
+                'entityId': cell.id,
                 'pathLen': '1',
                 'endpoint': document.getElementById("endpoint").value,
                 'destroySession': 'false'
