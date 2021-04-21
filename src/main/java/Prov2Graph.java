@@ -42,6 +42,25 @@ public class Prov2Graph extends HttpServlet {
 	**/
 	private static final long serialVersionUID = 1L;
 
+	private static String getNodeName(String nodeId, String serviceURI){
+		String nodeName = null;
+		String query = String.format(
+			"SELECT ?nodeName WHERE {OPTIONAL {<%s> <http://purl.org/dc/terms/title> ?nodeName} OPTIONAL {<%s> <http://www.w3.org/2004/02/skos/core#prefLabel> ?nodeName} OPTIONAL {<%s> <http://www.w3.org/2000/01/rdf-schema#label> ?nodeName}}", 
+			nodeId, 
+			nodeId, 
+			nodeId);
+		try (QueryExecution nameQ = QueryExecutionFactory.sparqlService(serviceURI, query)) {
+			ResultSet nameResults = nameQ.execSelect();
+			while (nameResults.hasNext()) {
+				QuerySolution soln = nameResults.nextSolution();
+				if (soln.get("nodeName") != null){
+					nodeName = soln.get("nodeName").toString();
+				}
+			}
+		}
+		return nodeName;
+	}
+
 	public static Model constructSubGraph(Model model, String serviceURI, Set<String> entityIds, int length)
 			throws IOException {
 
@@ -51,14 +70,7 @@ public class Prov2Graph extends HttpServlet {
 			for (String entityId : entityIds) {
 				Resource entity = model.createResource(entityId);
 				entity.addProperty(RDF.type, model.createResource(PROV + "Entity"));
-				String query;
-
-				// String attributedQuery = "SELECT ?s ?o WHERE {?s
-				// <http://www.w3.org/ns/prov#wasAttributedTo> ?o}";
-				// String associatedQuery = "SELECT ?s ?o WHERE {?s
-				// <http://www.w3.org/ns/prov#wasAssociatedWith> ?o}";
-
-				query = String.format(
+				String query = String.format(
 						"SELECT ?activity WHERE {<%s> <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity}",
 						entityId);
 				try (QueryExecution wasGeneratedByQ = QueryExecutionFactory.sparqlService(serviceURI, query)) {
@@ -153,9 +165,13 @@ public class Prov2Graph extends HttpServlet {
 				QuerySolution soln = dataResults.nextSolution();
 				String entityId = soln.get("entity").toString();
 				// nameLength determines node extent in visualization 
-				int nameLength = entityId.length() * 6 + 10;
+				String entityName = getNodeName(entityId, serviceURI);
+				if (entityName == null){
+					entityName = entityId;
+				}
+				int nameLength = entityName.length() * 6 + 10;
 				Element dataDMP = new Element("DataDMP")
-					.setAttribute("label", entityId)
+					.setAttribute("label", entityName)
 					.setAttribute("id", entityId)
 					.addContent(new Element("mxCell")
 						.setAttribute("style", "dataDMP")
@@ -177,10 +193,13 @@ public class Prov2Graph extends HttpServlet {
 			while (activityResults.hasNext()) {
 				QuerySolution soln = activityResults.nextSolution();
 				String activityId = soln.get("activity").toString();
-
-				int nameLength = activityId.length() * 7 + 10;
+				String activityName = getNodeName(activityId, serviceURI);
+				if (activityName == null){
+					activityName = activityId;
+				}
+				int nameLength = activityName.length() * 7 + 10;
 				Element processDMP = new Element("ProcessDMP")
-					.setAttribute("label", activityId)
+					.setAttribute("label", activityName)
 					.setAttribute("id", activityId)
 					.addContent(new Element("mxCell")
 						.setAttribute("style", "processDMP")
@@ -203,9 +222,13 @@ public class Prov2Graph extends HttpServlet {
 			while (agentResults.hasNext()) {
 				QuerySolution soln = agentResults.nextSolution();
 				String agentId = soln.get("agent").toString();
-				int nameLength = agentId.length() * 5 + 5;
+				String agentName = getNodeName(agentId, serviceURI);
+				if (agentName == null){
+					agentName = agentId;
+				}
+				int nameLength = agentName.length() * 5 + 5;
 				Element agentDMP = new Element("AgentDMP")
-					.setAttribute("label", agentId)
+					.setAttribute("label", agentName)
 					.setAttribute("id", agentId)
 					.addContent(new Element("mxCell")
 						.setAttribute("style", "agentDMP")
