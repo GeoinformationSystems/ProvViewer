@@ -127,205 +127,246 @@ public class Prov2Graph extends HttpServlet {
 		return model;
 	}
 
-	public static Document prov2mxGraph(Model model) throws IOException {
-
-		String dataQuery = "SELECT ?s WHERE {?s a <http://www.w3.org/ns/prov#Entity>}";
-		String processQuery = "SELECT ?s WHERE {?s a <http://www.w3.org/ns/prov#Activity>}";
-		String generatedQuery = "SELECT ?s ?o WHERE {?s <http://www.w3.org/ns/prov#wasGeneratedBy> ?o}";
-		String usedQuery = "SELECT ?s ?o WHERE {?s <http://www.w3.org/ns/prov#used> ?o}";
-		String agentQuery = "SELECT ?s WHERE {?s a <http://www.w3.org/ns/prov#Agent>}";
-		String attributedQuery = "SELECT ?s ?o WHERE {?s <http://www.w3.org/ns/prov#wasAttributedTo> ?o}";
-		String associatedQuery = "SELECT ?s ?o WHERE {?s <http://www.w3.org/ns/prov#wasAssociatedWith> ?o}";
-
+	public static Document prov2mxGraph(Model model, String serviceURI) throws IOException {
 		Document document = new Document();
 		Element mxGraphModel = new Element("mxGraphModel");
 
 		Element root = new Element("root");
 
-		Element diagram = new Element("Diagram").setAttribute("label", "My Diagram")
-				.setAttribute("href", "http://www.jgraph.com/").setAttribute("id", "0");
+		Element diagram = new Element("Diagram")
+			.setAttribute("label", "My Diagram")
+			.setAttribute("href", "http://www.jgraph.com/")
+			.setAttribute("id", "0");
 		diagram.addContent(new Element("mxCell"));
 
-		Element layer = new Element("Layer").setAttribute("label", "Default Layer").setAttribute("id", "1");
-		layer.addContent(new Element("mxCell").setAttribute("parent", "0"));
+		Element layer = new Element("Layer")
+			.setAttribute("label", "Default Layer")
+			.setAttribute("id", "1");
+		layer.addContent(new Element("mxCell")
+			.setAttribute("parent", "0"));
 
 		root.addContent(diagram).addContent(layer);
 
-		try (QueryExecution dataQ = QueryExecutionFactory.create(dataQuery, model)) {
+		try (QueryExecution dataQ = QueryExecutionFactory.create(
+				"SELECT ?entity WHERE {?entity a <http://www.w3.org/ns/prov#Entity>}", 
+				model)) {
 			ResultSet dataResults = dataQ.execSelect();
 
 			while (dataResults.hasNext()) {
 				QuerySolution soln = dataResults.nextSolution();
-				RDFNode x = soln.get("s");
-
-				String o = x.toString();
-				int oLength = o.length() * 6 + 10;
-				Element dataDMP = new Element("DataDMP").setAttribute("label", o).setAttribute("id", o)
-						.addContent(new Element("mxCell").setAttribute("style", "dataDMP").setAttribute("parent", "1")
-								.setAttribute("vertex", "1")
-								.addContent(new Element("mxGeometry").setAttribute("x", "0").setAttribute("y", "0")
-										.setAttribute("width", String.valueOf(oLength)).setAttribute("height", "40")
-										.setAttribute("as", "geometry")));
+				String entityId = soln.get("s").toString();
+				// nameLength determines node extent in visualization 
+				int nameLength = entityId.length() * 6 + 10;
+				Element dataDMP = new Element("DataDMP")
+					.setAttribute("label", entityId)
+					.setAttribute("id", entityId)
+					.addContent(new Element("mxCell")
+						.setAttribute("style", "dataDMP")
+						.setAttribute("parent", "1")
+						.setAttribute("vertex", "1")
+						.addContent(new Element("mxGeometry")
+							.setAttribute("x", "0").setAttribute("y", "0")
+							.setAttribute("width", String.valueOf(nameLength))
+							.setAttribute("height", "40")
+							.setAttribute("as", "geometry")));
 				root.addContent(dataDMP);
 			}
 		}
 
-		try (QueryExecution processQ = QueryExecutionFactory.create(processQuery, model)) {
-			ResultSet processResults = processQ.execSelect();
-			while (processResults.hasNext()) {
-				QuerySolution soln = processResults.nextSolution();
-				RDFNode x = soln.get("s");
+		try (QueryExecution activityQ = QueryExecutionFactory.create(
+				"SELECT ?activity WHERE {?activity a <http://www.w3.org/ns/prov#Activity>}",
+				model)) {
+			ResultSet activityResults = activityQ.execSelect();
+			while (activityResults.hasNext()) {
+				QuerySolution soln = activityResults.nextSolution();
+				String activityId = soln.get("activity").toString();
 
-				String s = x.toString();
-				int sLength = s.length() * 7 + 10;
-				Element processDMP = new Element("ProcessDMP").setAttribute("label", s).setAttribute("id", s)
-						.addContent(new Element("mxCell").setAttribute("style", "processDMP")
-								.setAttribute("vertex", "1").setAttribute("parent", "1")
-								.addContent(new Element("mxGeometry").setAttribute("x", "100").setAttribute("y", "0")
-										.setAttribute("width", String.valueOf(sLength)).setAttribute("height", "40")
-										.setAttribute("as", "geometry")));
+				int nameLength = activityId.length() * 7 + 10;
+				Element processDMP = new Element("ProcessDMP")
+					.setAttribute("label", activityId)
+					.setAttribute("id", activityId)
+					.addContent(new Element("mxCell")
+						.setAttribute("style", "processDMP")
+						.setAttribute("vertex", "1")
+						.setAttribute("parent", "1")
+						.addContent(new Element("mxGeometry")
+							.setAttribute("x", "100")
+							.setAttribute("y", "0")
+							.setAttribute("width", String.valueOf(nameLength))
+							.setAttribute("height", "40")
+							.setAttribute("as", "geometry")));
 				root.addContent(processDMP);
 			}
 		}
 
-		try (QueryExecution agentQ = QueryExecutionFactory.create(agentQuery, model)) {
+		try (QueryExecution agentQ = QueryExecutionFactory.create(
+			"SELECT ?agent WHERE {?agent a <http://www.w3.org/ns/prov#Agent>}", 
+				model)) {
 			ResultSet agentResults = agentQ.execSelect();
 			while (agentResults.hasNext()) {
 				QuerySolution soln = agentResults.nextSolution();
-				RDFNode x = soln.get("s");
-
-				String s = x.toString();
-				int sLength = s.length() * 5 + 5;
-				Element agentDMP = new Element("AgentDMP").setAttribute("label", s).setAttribute("id", s)
-						.addContent(new Element("mxCell").setAttribute("style", "agentDMP").setAttribute("vertex", "1")
-								.setAttribute("parent", "1")
-								.addContent(new Element("mxGeometry").setAttribute("x", "100").setAttribute("y", "0")
-										.setAttribute("width", String.valueOf(sLength)).setAttribute("height", "40")
-										.setAttribute("as", "geometry")));
+				String agentId = soln.get("agent").toString();
+				int nameLength = agentId.length() * 5 + 5;
+				Element agentDMP = new Element("AgentDMP")
+					.setAttribute("label", agentId)
+					.setAttribute("id", agentId)
+					.addContent(new Element("mxCell")
+						.setAttribute("style", "agentDMP")
+						.setAttribute("vertex", "1")
+						.setAttribute("parent", "1")
+						.addContent(new Element("mxGeometry")
+							.setAttribute("x", "100")
+							.setAttribute("y", "0")
+							.setAttribute("width", String.valueOf(nameLength))
+							.setAttribute("height", "40")
+							.setAttribute("as", "geometry")));
 				root.addContent(agentDMP);
 			}
 		}
 
-		try (QueryExecution generatedQ = QueryExecutionFactory.create(generatedQuery, model)) {
-			ResultSet generatedResults = generatedQ.execSelect();
+		try (QueryExecution wasGeneratedByQ = QueryExecutionFactory.create(
+				"SELECT ?entity ?activity WHERE {?entity <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity}", 
+				model)) {
+			ResultSet wasGeneratedByResults = wasGeneratedByQ.execSelect();
 			int id = 2;
-			while (generatedResults.hasNext()) {
-				QuerySolution soln = generatedResults.nextSolution();
+			while (wasGeneratedByResults.hasNext()) {
+				QuerySolution soln = wasGeneratedByResults.nextSolution();
 
-				RDFNode s = soln.get("s");
-				RDFNode o = soln.get("o");
-
-				String subj = s.toString();
-				String obj = o.toString();
+				String entityId = soln.get("entity").toString();
+				String activityId = soln.get("activity").toString();
 
 				Element connector = new Element("Connector")
-						// .setAttribute("label", "wasGeneratedBy")
-						.setAttribute("id", String.valueOf(id))
-						.addContent(new Element("mxCell").setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
-								.setAttribute("edge", "1").setAttribute("parent", "1").setAttribute("source", obj)
-								.setAttribute("target", subj)
-								.addContent(new Element("mxGeometry").setAttribute("relative", "1")
-										.setAttribute("as", "geometry")
-										.addContent(new Element("Array").setAttribute("as", "geometry")
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0"))
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0")))));
+					// .setAttribute("label", "wasGeneratedBy")
+					.setAttribute("id", String.valueOf(id))
+					.addContent(new Element("mxCell")
+					.setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
+					.setAttribute("edge", "1")
+					.setAttribute("parent", "1")
+					.setAttribute("source", activityId)
+					.setAttribute("target", entityId)
+						.addContent(new Element("mxGeometry")
+							.setAttribute("relative", "1")
+							.setAttribute("as", "geometry")
+							.addContent(new Element("Array")
+								.setAttribute("as", "geometry")
+								.addContent(new Element("mxPoint")
+									.setAttribute("x", "0")
+									.setAttribute("y", "0"))
+									.addContent(new Element("mxPoint")
+										.setAttribute("x", "0")
+										.setAttribute("y", "0")))));
 				root.addContent(connector);
 				id++;
 			}
 		}
 
-		try (QueryExecution usedQ = QueryExecutionFactory.create(usedQuery, model)) {
+		try (QueryExecution usedQ = QueryExecutionFactory.create(
+				"SELECT ?activity ?entity WHERE {?activity <http://www.w3.org/ns/prov#used> ?entity}", 
+				model)) {
 			ResultSet usedResults = usedQ.execSelect();
 			int id = 2;
 			while (usedResults.hasNext()) {
 				QuerySolution soln = usedResults.nextSolution();
 
-				RDFNode s = soln.get("s");
-				RDFNode o = soln.get("o");
-
-				String subj = s.toString();
-				String obj = o.toString();
+				String activityId = soln.get("activity").toString();
+				String entityId = soln.get("entity").toString();
 
 				Element connector = new Element("Connector")
 						// .setAttribute("label", "used")
 						.setAttribute("id", String.valueOf(id) + "b")
-						.addContent(new Element("mxCell").setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
-								.setAttribute("edge", "1").setAttribute("parent", "1").setAttribute("source", obj)
-								.setAttribute("target", subj)
-								.addContent(new Element("mxGeometry").setAttribute("relative", "1")
-										.setAttribute("as", "geometry")
-										.addContent(new Element("Array").setAttribute("as", "geometry")
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0"))
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0")))));
+						.addContent(new Element("mxCell")
+							.setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
+							.setAttribute("edge", "1")
+							.setAttribute("parent", "1")
+							.setAttribute("source", entityId)
+							.setAttribute("target", activityId)
+							.addContent(new Element("mxGeometry")
+								.setAttribute("relative", "1")
+								.setAttribute("as", "geometry")
+								.addContent(new Element("Array")
+									.setAttribute("as", "geometry")
+									.addContent(new Element("mxPoint")
+										.setAttribute("x", "0")
+										.setAttribute("y", "0"))
+										.addContent(new Element("mxPoint")
+											.setAttribute("x", "0")
+											.setAttribute("y", "0")))));
 				root.addContent(connector);
 				id++;
 			}
 		}
 
-		try (QueryExecution associatedQ = QueryExecutionFactory.create(associatedQuery, model)) {
+		try (QueryExecution associatedQ = QueryExecutionFactory.create(
+				"SELECT ?activity ?agent WHERE {?activity <http://www.w3.org/ns/prov#wasAssociatedWith> ?agent}", 
+				model)) {
 			ResultSet associatedResults = associatedQ.execSelect();
 			int id = 2;
 			while (associatedResults.hasNext()) {
 				QuerySolution soln = associatedResults.nextSolution();
 
-				RDFNode s = soln.get("s");
-				RDFNode o = soln.get("o");
-
-				String subj = s.toString();
-				String obj = o.toString();
+				String activityId = soln.get("activity").toString();
+				String agentId = soln.get("agent").toString();
 
 				Element connector = new Element("Connector")
 						// .setAttribute("label", "wasAssociatedWith")
 						.setAttribute("id", String.valueOf(id) + "c")
-						.addContent(new Element("mxCell").setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
-								.setAttribute("edge", "1").setAttribute("parent", "1").setAttribute("source", subj)
-								.setAttribute("target", obj)
-								.addContent(new Element("mxGeometry").setAttribute("relative", "1")
-										.setAttribute("as", "geometry")
-										.addContent(new Element("Array").setAttribute("as", "geometry")
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0"))
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0")))));
+						.addContent(new Element("mxCell")
+							.setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
+							.setAttribute("edge", "1")
+							.setAttribute("parent", "1")
+							.setAttribute("source", activityId)
+							.setAttribute("target", agentId)
+							.addContent(new Element("mxGeometry")
+								.setAttribute("relative", "1")
+								.setAttribute("as", "geometry")
+								.addContent(new Element("Array")
+									.setAttribute("as", "geometry")
+									.addContent(new Element("mxPoint")
+										.setAttribute("x", "0")
+										.setAttribute("y", "0"))
+										.addContent(new Element("mxPoint")
+											.setAttribute("x", "0")
+											.setAttribute("y", "0")))));
 				root.addContent(connector);
 				id++;
 			}
 		}
 
-		try (QueryExecution attributedQ = QueryExecutionFactory.create(attributedQuery, model)) {
+		try (QueryExecution attributedQ = QueryExecutionFactory.create(
+				"SELECT ?entity ?agent WHERE {?entity <http://www.w3.org/ns/prov#wasAttributedTo> ?agent}", 
+				model)) {
 			ResultSet attributedResults = attributedQ.execSelect();
 			int id = 2;
 			while (attributedResults.hasNext()) {
 				QuerySolution soln = attributedResults.nextSolution();
 
-				RDFNode s = soln.get("s");
-				RDFNode o = soln.get("o");
-
-				String subj = s.toString();
-				String obj = o.toString();
+				String entityId = soln.get("entity").toString();
+				String agentId = soln.get("agent").toString();
 
 				Element connector = new Element("Connector")
 						// .setAttribute("label", "wasAttributedTo")
 						.setAttribute("id", String.valueOf(id) + "d")
-						.addContent(new Element("mxCell").setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
-								.setAttribute("edge", "1").setAttribute("parent", "1").setAttribute("source", subj)
-								.setAttribute("target", obj)
-								.addContent(new Element("mxGeometry").setAttribute("relative", "1")
-										.setAttribute("as", "geometry")
-										.addContent(new Element("Array").setAttribute("as", "geometry")
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0"))
-												.addContent(new Element("mxPoint").setAttribute("x", "0")
-														.setAttribute("y", "0")))));
+						.addContent(new Element("mxCell")
+							.setAttribute("style", "noEdgeStyle=1;orthogonal=1;")
+							.setAttribute("edge", "1")
+							.setAttribute("parent", "1")
+							.setAttribute("source", entityId)
+							.setAttribute("target", agentId)
+							.addContent(new Element("mxGeometry")
+								.setAttribute("relative", "1")
+								.setAttribute("as", "geometry")
+								.addContent(new Element("Array")
+									.setAttribute("as", "geometry")
+									.addContent(new Element("mxPoint")
+										.setAttribute("x", "0")
+										.setAttribute("y", "0"))
+										.addContent(new Element("mxPoint")
+											.setAttribute("x", "0")
+											.setAttribute("y", "0")))));
 				root.addContent(connector);
 				id++;
 			}
 		}
-
 		mxGraphModel.addContent(root);
 		document.setContent(mxGraphModel);
 		return document;
@@ -361,7 +402,7 @@ public class Prov2Graph extends HttpServlet {
 			entities.add(entityName);
 			model = constructSubGraph(model, endpoint, entities, pathLen);
 			session.setAttribute("model", model);
-			Document doc = prov2mxGraph(model);
+			Document doc = prov2mxGraph(model, endpoint);
 			response.setContentType("text/plain");
 			response.setHeader("Content-Disposition", "attachment");
 			response.setStatus(HttpServletResponse.SC_OK);
