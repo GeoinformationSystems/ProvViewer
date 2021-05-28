@@ -121,9 +121,9 @@ function updateCanvas(editor, data) {
         var parent = editor.graph.getDefaultParent();
         layout.execute(parent);
         editor.graph.fit();
-        // shift graph to mid of editor area 
-        var translate = ($('#editorarea').height() / (2 * editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
-        editor.graph.view.setTranslate(0, translate)
+        // shift graph to mid of editor area (is somewhat buggy)
+        // var translate = ($('#editorarea').height() / (2 * editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
+        // editor.graph.view.setTranslate(0, translate)
         editor.graph.view.rendering = true;
         editor.graph.refresh();
     }
