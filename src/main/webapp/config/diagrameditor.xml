@@ -220,9 +220,26 @@
 				<add as="fillColor" value="#fd7772"/>
 				<add as="minHeight" value="40"/>
 				<add as="minWidth" value="120"/>
+				<add as="shadow" value="-1"/>
+			</add>
+			<add as="dataDMPExpandable">
+				<add as="shape" value="dataDMP"/>
+				<add as="strokeColor" value="#00000000"/>
+				<add as="fillColor" value="#ffa4a1"/>
+				<add as="minHeight" value="40"/>
+				<add as="minWidth" value="120"/>
+				
+				<!-- <add as="fontSize" value="12"/> -->
+				<!-- <add as="align" value="left"/> -->
+				<!-- <add as="verticalAlign" value="top"/> -->
+				<add as="shadow" value="1"/>
+				<add as="strokeColor" value="none"/>
+				<!-- <add as="fillColor" value="none"/> -->
+				<!-- <add as="gradientColor" value="white"/> -->
 			</add>
 			<add as="processDMP">
 				<add as="shape" value="processDMP"/>
+				<add as="perimeter" value="rectanglePerimeter"/>
 				<add as="strokeColor" value="#07438d"/>
 				<add as="fillColor" value="#07438d"/>
 				<add as="minHeight" value="40"/>

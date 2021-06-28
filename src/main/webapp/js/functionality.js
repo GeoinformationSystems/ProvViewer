@@ -1,7 +1,68 @@
 var mouseIsOverCanvas = false;
 
 $(document).ready(function () {
+    $('#uploadModal').modal({ show: false });
 
+    $("#uploadProv").bind("click", function () {
+        $('#uploadModal').modal('show');
+    });
+    $("#upload").bind("click", function () {
+        if (typeof (FileReader) != "undefined") {
+            var reader = new FileReader();
+            var fileExtension = $("#fileUpload")[0].files[0].name.split('.').pop().toLowerCase();
+            reader.onload = function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: "./uploadPROV",
+                    data: {
+                        'fileextension': fileExtension,
+                        'filecontent': escape(e.target.result)
+                    },
+                    success: function (data) {
+                        if (data == null)
+                            return;
+                        $('#myModal').modal('hide');
+                        $("#endpoint").val("local");
+                        $("#getDatasets").click();
+
+                    }
+                });
+            }
+            reader.readAsText($("#fileUpload")[0].files[0]);
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+
+        // var regex = /^([a-zA-Z0-9\s_\\.\-:()])+(.xml)$/;
+        // if (regex.test($("#fileUpload").val().toLowerCase())) {
+        //     if (typeof (FileReader) != "undefined") {
+        //         var reader = new FileReader();
+        //         reader.onload = function (e) {
+        //             $.ajax({
+        //                 type: 'POST',
+        //                 url: "./uploadPROV",
+        //                 data: {
+        //                     'filename': 'upload',
+        //                     'xml': escape(e.target.result)
+        //                 },
+        //                 success: function (data) {
+        //                     if (data == null)
+        //                         return;
+
+        //                     $('#myModal').modal('hide');
+
+        //                 }
+        //             });
+        //         }
+        //         reader.readAsText($("#fileUpload")[0].files[0]);
+        //     } else {
+        //         alert("This browser does not support HTML5.");
+        //     }
+        // } else {
+        //     alert("Please upload a valid XML file.");
+        //     // }
+        // }
+    });
     getDatasets();
     // setTimeout(() => processURLparams(), 1000);
     $("#getDatasets").bind("click", getDatasets);
@@ -63,6 +124,7 @@ function processURLparams() {
 }
 
 function getDatasets() {
+    $("#selectionBox").empty();
     var endpointUrl = document.getElementById("endpoint").value;
     sparqlQuery = [
         "PREFIX prov: <http://www.w3.org/ns/prov#>",
@@ -76,31 +138,60 @@ function getDatasets() {
         "OPTIONAL {?entity rdfs:label ?entityTitle .}",
         "}"
     ].join(" ");
-    settings = {
-        headers: { Accept: 'application/sparql-results+json' },
-        data: { query: sparqlQuery }
-    };
+    if (endpointUrl == 'local') {
+        $.ajax({
+            type: 'POST',
+            url: "./sparql",
+            data: {
+                'query': sparqlQuery
+            },
+            success: function (data) {
+                if (data == null)
+                    return;
+                console.log(JSON.parse(data))
+                let results = JSON.parse(data)["results"]["bindings"];
+                let select = document.getElementById("selectionBox");
+                for (let i = 0; i < results.length; i++) {
+                    option = document.createElement("option")
+                    option.value = option.id = (results[i]["entity"]["value"]);
+                    if (results[i]["entityTitle"] != null) {
+                        option.text = (results[i]["entityTitle"]["value"]);
+                    } else {
+                        option.text = (results[i]["entity"]["value"]);
+                    }
 
-    $("#selectionBox").empty();
-    $.ajax(endpointUrl, settings).then(function (data) {
-        // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-
-        let results = data["results"]["bindings"];
-        let select = document.getElementById("selectionBox");
-        for (let i = 0; i < results.length; i++) {
-            option = document.createElement("option")
-            option.value = option.id = (results[i]["entity"]["value"]);
-            if (results[i]["entityTitle"] != null) {
-                option.text = (results[i]["entityTitle"]["value"]);
-            } else {
-                option.text = (results[i]["entity"]["value"]);
+                    selectionBox.add(option);
+                }
             }
+        });
+    }
+    else {
+        settings = {
+            headers: { Accept: 'application/sparql-results+json' },
+            data: { query: sparqlQuery }
+        };
 
-            selectionBox.add(option);
+        $.ajax(endpointUrl, settings).then(function (data) {
+            // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
+            console.log(data)
+            let results = data["results"]["bindings"];
+            let select = document.getElementById("selectionBox");
+            for (let i = 0; i < results.length; i++) {
+                option = document.createElement("option")
+                option.value = option.id = (results[i]["entity"]["value"]);
+                if (results[i]["entityTitle"] != null) {
+                    option.text = (results[i]["entityTitle"]["value"]);
+                } else {
+                    option.text = (results[i]["entity"]["value"]);
+                }
 
-        }
-        processURLparams()
-    });
+                selectionBox.add(option);
+
+            }
+            processURLparams()
+        });
+    }
+
 }
 
 function updateCanvas(editor, data) {
@@ -124,12 +215,97 @@ function updateCanvas(editor, data) {
         // shift graph to mid of editor area (is somewhat buggy)
         // var translate = ($('#editorarea').height() / (2 * editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
         // editor.graph.view.setTranslate(0, translate)
+
         editor.graph.view.rendering = true;
         editor.graph.refresh();
+
+        // -----------------
+        // for each cell present in the current mxGraph model, check whether there are further provenance information available in the resource graph
+        // recolor expandable cells accordingly
+        var endpointUrl = document.getElementById("endpoint").value;
+        var cellIds = Object.keys(editor.graph.model.cells)
+        // console.log(cellIds)
+        for (let cellId of cellIds) {
+            // console.log(editor.graph.model.getCell(cellId))
+            // if (editor.graph.model.isVertex(editor.graph.model.getCell(cellId))) {
+            if (editor.graph.model.getCell(cellId).value.getAttribute("provConcept") == "entity") {
+                let query = [
+                    "SELECT DISTINCT ?entity WHERE ",
+                    "{",
+                    "{<" + cellId + "> <http://www.w3.org/ns/prov#wasDerivedFrom> ?entity.}",
+                    "UNION",
+                    "{?entity <http://www.w3.org/ns/prov#wasDerivedFrom> <" + cellId + ">.}",
+                    "UNION",
+                    "{?entity <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity.",
+                    "?activity <http://www.w3.org/ns/prov#used> <" + cellId + ">.}",
+                    "UNION",
+                    "{<" + cellId + "> <http://www.w3.org/ns/prov#wasGeneratedBy> ?activity.",
+                    "?activity <http://www.w3.org/ns/prov#used> ?entity.}",
+                    "}"
+                ].join(" ");
+                if (endpointUrl == 'local') {
+                    $.ajax({
+                        type: 'POST',
+                        url: "./sparql",
+                        data: {
+                            'query': query
+                        },
+                        success: function (data) {
+                            if (data == null)
+                                return;
+                            console.log(JSON.parse(data))
+                            let results = JSON.parse(data)["results"]["bindings"];
+                            let neighbors = []
+                            for (result of results) {
+                                if (result["entity"] != undefined) {
+                                    neighbors.push(result["entity"]["value"])
+                                }
+                            }
+                            if (editor.graph.model.getCell(cellId).value.getAttribute("entityNeighbors") != neighbors.length) {
+                                editor.graph.model.getCell(cellId).setStyle("dataDMPExpandable")
+                            }
+                            editor.graph.refresh();
+                            console.log(cellId)
+                            console.log(editor.graph.model.getCell(cellId).value.getAttribute("entityNeighbors"))
+                            console.log(neighbors)
+                        }
+                    });
+                }
+                else {
+                    // console.log(query)
+                    settings = {
+                        headers: { Accept: 'application/sparql-results+json' },
+                        data: { query: query }
+                    };
+                    $.ajax(endpointUrl, settings).then(function (data) {
+                        // console.log("current cell")
+                        // console.log(cellId)
+                        // console.log("neighbors")
+                        let results = data["results"]["bindings"];
+                        let neighbors = []
+                        for (result of results) {
+                            if (result["entity"] != undefined) {
+                                neighbors.push(result["entity"]["value"])
+                            }
+                        }
+                        if (editor.graph.model.getCell(cellId).value.getAttribute("entityNeighbors") != neighbors.length) {
+                            editor.graph.model.getCell(cellId).setStyle("dataDMPExpandable")
+                        }
+                        editor.graph.refresh();
+                        console.log(cellId)
+                        console.log(editor.graph.model.getCell(cellId).value.getAttribute("entityNeighbors"))
+                        console.log(neighbors)
+                    })
+
+                }
+            }
+        }
     }
 }
 
+
 function onInit(editor) {
+
     $("#newGraph").bind("click", function (e) {
         // console.log(document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value)
         $.ajax({
@@ -145,36 +321,38 @@ function onInit(editor) {
                 if (data == null)
                     return;
 
-                $('#myModal').modal('hide');
                 updateCanvas(editor, data)
             }
         });
     });
 
-    $("#addToGraph").bind("click", function (e) {
-        $.ajax({
-            type: 'POST',
-            url: "./importPROV",
-            data: {
-                'entityId': document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value,
-                'pathLen': '1',
-                'endpoint': document.getElementById("endpoint").value,
-                'destroySession': 'false'
-            },
-            success: function (data) {
-                if (data == null)
-                    return;
+    // $("#addToGraph").bind("click", function (e) {
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: "./importPROV",
+    //         data: {
+    //             'entityId': document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value,
+    //             'pathLen': '1',
+    //             'endpoint': document.getElementById("endpoint").value,
+    //             'destroySession': 'false'
+    //         },
+    //         success: function (data) {
+    //             if (data == null)
+    //                 return;
 
-                $('#myModal').modal('hide');
-                updateCanvas(editor, data)
-            }
-        });
-    });
+    //             
+
+    //             updateCanvas(editor, data)
+    //         }
+    //     });
+    // });
 
 
     mxVertexHandler.prototype.rotationEnabled = false;
     mxGraphHandler.prototype.guidesEnabled = true;
 
+
+    mxEditor.prototype.addAction
     mxEditor.prototype.dblClickAction = 'expandCell';
     mxEditor.prototype.strgClickAction = 'goToResource';
     mxGuide.prototype.isEnabledForEvent = function (evt) {
@@ -188,6 +366,8 @@ function onInit(editor) {
     editor.graph.setConnectableEdges(false);
     editor.graph.setAllowDanglingEdges(false);
     editor.graph.setDisconnectOnMove(false);
+
+
 
     editor.addAction('expandCell', function (editor, cell) {
         $.ajax({
@@ -216,11 +396,16 @@ function onInit(editor) {
                 x_diff = x_new - x_old;
                 y_diff = y_new - y_old;
 
-                editor.graph.view.scaleAndTranslate(scale_old, translate_old_x - x_diff, translate_old_y - y_diff)
+                // editor.graph.view.scaleAndTranslate(scale_old, translate_old_x - x_diff, translate_old_y - y_diff)
                 editor.graph.view.rendering = true;
+
+
             }
         });
     });
+
+
+
     editor.addAction('goToResource', function (editor, cell) {
         window.open(cell.id)
     })
@@ -278,8 +463,8 @@ function onInit(editor) {
         editor.graph.fit();
         editor.graph.refresh();
         // shift graph to mid of editor area 
-        var translate = ($('#editorarea').height() / (2 * editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
-        editor.graph.view.setTranslate(0, translate)
+        // var translate = ($('#editorarea').height() / (2 * editor.graph.view.getScale()) - (editor.graph.view.getGraphBounds().y + editor.graph.view.getGraphBounds().height / 2));
+        // editor.graph.view.setTranslate(0, translate)
         editor.graph.view.rendering = true;
 
         editor.graph.refresh();

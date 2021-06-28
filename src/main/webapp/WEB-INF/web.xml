@@ -12,4 +12,20 @@
         <servlet-name>Prov2Graph</servlet-name>
         <url-pattern>/importPROV</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ProvOUpload</servlet-name>
+        <servlet-class>ProvOUpload</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProvOUpload</servlet-name>
+        <url-pattern>/uploadPROV</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>QueryGraph</servlet-name>
+        <servlet-class>QueryGraph</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QueryGraph</servlet-name>
+        <url-pattern>/sparql</url-pattern>
+    </servlet-mapping>
 </web-app>
