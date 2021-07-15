@@ -4,11 +4,11 @@ _Software is still under development. A running instance can be reached at: http
 
 Proof-of-concept application, that allows a user to visualize provenance graphs that follow the PROV-Ontology. Users can either directly query a SPARQL endpoint that contains provenance information or upload a valid RDF file. Provenance descriptions should always follow the PROV-O starting point classes and properties [https://www.w3.org/TR/prov-o/#description-starting-point-terms, https://www.w3.org/TR/prov-o/#starting-points-figure].
 
-PROV Entities are indicated with red color, Activities with blue. Agents are not implemented yet. Entities that show up in light red can be expanded with a double click or right click.
+PROV Entities are indicated with red color, Activities with blue. Agents are not implemented yet. Entities that show up in light red, can be expanded with a double click or right click.
 
 The default SPARQL endpoint points to an RDF serialization of the metadata catalog [https://geokur-dmp.geo.tu-dresden.de/] of the GeoKur research project [https://geokur.geo.tu-dresden.de/]. The Metadata Scheme of this catalog supports the tracing of provenance. 
 
-An example upload is provided by `SuitablityCorridorModel-Prov.ttl`. the example shows the provenance of the processing steps of an ArcGIS Tutorial [https://learn.arcgis.com/en/projects/build-a-model-to-connect-mountain-lion-habitat/]. The RDF file is generated from the ArcGIS model report, which was converted with the tool ArcGIS2ProvO [https://github.com/GeoinformationSystems/ArcGIS2ProvO].
+An example upload is provided by `SuitablityCorridorModel-Prov.ttl`. The example shows the provenance of the processing steps of an ArcGIS Tutorial [https://learn.arcgis.com/en/projects/build-a-model-to-connect-mountain-lion-habitat/]. The RDF file is generated from the ArcGIS model report, which was converted with the tool ArcGIS2ProvO [https://github.com/GeoinformationSystems/ArcGIS2ProvO].
 
 ## Structure
 
