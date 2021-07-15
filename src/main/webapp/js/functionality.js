@@ -23,8 +23,7 @@ $(document).ready(function () {
                             return;
                         $('#myModal').modal('hide');
                         $("#endpoint").val("local");
-                        $("#getDatasets").click();
-
+                        $('#getDatasets').click();
                     }
                 });
             }
@@ -32,39 +31,8 @@ $(document).ready(function () {
         } else {
             alert("This browser does not support HTML5.");
         }
-
-        // var regex = /^([a-zA-Z0-9\s_\\.\-:()])+(.xml)$/;
-        // if (regex.test($("#fileUpload").val().toLowerCase())) {
-        //     if (typeof (FileReader) != "undefined") {
-        //         var reader = new FileReader();
-        //         reader.onload = function (e) {
-        //             $.ajax({
-        //                 type: 'POST',
-        //                 url: "./uploadPROV",
-        //                 data: {
-        //                     'filename': 'upload',
-        //                     'xml': escape(e.target.result)
-        //                 },
-        //                 success: function (data) {
-        //                     if (data == null)
-        //                         return;
-
-        //                     $('#myModal').modal('hide');
-
-        //                 }
-        //             });
-        //         }
-        //         reader.readAsText($("#fileUpload")[0].files[0]);
-        //     } else {
-        //         alert("This browser does not support HTML5.");
-        //     }
-        // } else {
-        //     alert("Please upload a valid XML file.");
-        //     // }
-        // }
     });
     getDatasets();
-    // setTimeout(() => processURLparams(), 1000);
     $("#getDatasets").bind("click", getDatasets);
 
     $("#editorarea").bind({
@@ -136,7 +104,7 @@ function getDatasets() {
         "OPTIONAL {?entity dct:title ?entityTitle .}",
         "OPTIONAL {?entity skos:label ?entityTitle .}",
         "OPTIONAL {?entity rdfs:label ?entityTitle .}",
-        "}"
+        "} order by asc(str(?entityTitle))"
     ].join(" ");
     if (endpointUrl == 'local') {
         $.ajax({
@@ -326,27 +294,11 @@ function onInit(editor) {
         });
     });
 
-    // $("#addToGraph").bind("click", function (e) {
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: "./importPROV",
-    //         data: {
-    //             'entityId': document.getElementById("selectionBox").options[document.getElementById("selectionBox").selectedIndex].value,
-    //             'pathLen': '1',
-    //             'endpoint': document.getElementById("endpoint").value,
-    //             'destroySession': 'false'
-    //         },
-    //         success: function (data) {
-    //             if (data == null)
-    //                 return;
-
-    //             
-
-    //             updateCanvas(editor, data)
-    //         }
-    //     });
-    // });
-
+    $("#getDatasets").bind("click", function (e) {
+        editor.graph.getModel().beginUpdate();
+        editor.graph.removeCells(editor.graph.getChildCells(editor.graph.getDefaultParent(), true, true));
+        editor.graph.getModel().endUpdate();
+    });
 
     mxVertexHandler.prototype.rotationEnabled = false;
     mxGraphHandler.prototype.guidesEnabled = true;

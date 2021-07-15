@@ -1,0 +1,96 @@
+@prefix cns: <https://provBasicExample.org/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+cns:Mountain_Lion_Corridors a prov:Entity ;
+    rdfs:label "Mountain_Lion_Corridors" ;
+    prov:wasGeneratedBy cns:CostConnectivity .
+
+cns:Mountain_Lion_Corridors_Advanced a prov:Entity ;
+    rdfs:label "Mountain_Lion_Corridors_Advanced" ;
+    prov:wasGeneratedBy cns:CostConnectivity .
+
+cns:CoreMountainLionHabitats a prov:Entity ;
+    rdfs:label "CoreMountainLionHabitats" .
+
+cns:Distance_to_Roads a prov:Entity ;
+    rdfs:label "Distance_to_Roads" ;
+    prov:wasGeneratedBy cns:EuclideanDistance .
+
+cns:Distance_to_Roads_Reclassified a prov:Entity ;
+    rdfs:label "Distance_to_Roads_Reclassified" ;
+    rdfs:comment "The value of Distance_to_Roads_Reclassified for the Activity WeightedSum is 1" ;
+    prov:wasGeneratedBy <https://provBasicExample.org/Reclassify(2)> .
+
+cns:Elevation a prov:Entity ;
+    rdfs:label "Elevation" ;
+    prov:wasGeneratedBy cns:EuclideanDistance .
+
+cns:FocalStatistics a prov:Activity ;
+    rdfs:label "FocalStatistics" ;
+    prov:used cns:Elevation .
+
+cns:LandCover a prov:Entity ;
+    rdfs:label "LandCover" .
+
+cns:Land_Cover_Reclassified a prov:Entity ;
+    rdfs:label "Land_Cover_Reclassified" ;
+    rdfs:comment "The value of Land_Cover_Reclassified for the Activity WeightedSum is 0,4" ;
+    prov:wasGeneratedBy <https://provBasicExample.org/Reclassify(3)> .
+
+cns:ProtectedStatus a prov:Entity ;
+    rdfs:label "ProtectedStatus" .
+
+cns:Protected_Status_Reclassified a prov:Entity ;
+    rdfs:label "Protected_Status_Reclassified" ;
+    rdfs:comment "The value of Protected_Status_Reclassified for the Activity WeightedSum is 1" ;
+    prov:wasGeneratedBy <https://provBasicExample.org/Reclassify(4)> .
+
+cns:Reclassify a prov:Activity ;
+    rdfs:label "Reclassify" ;
+    prov:used cns:Ruggedness .
+
+<https://provBasicExample.org/Reclassify(2)> a prov:Activity ;
+    rdfs:label "Reclassify(2)" ;
+    prov:used cns:Distance_to_Roads .
+
+<https://provBasicExample.org/Reclassify(3)> a prov:Activity ;
+    rdfs:label "Reclassify(3)" ;
+    prov:used cns:LandCover .
+
+<https://provBasicExample.org/Reclassify(4)> a prov:Activity ;
+    rdfs:label "Reclassify(4)" ;
+    prov:used cns:ProtectedStatus .
+
+cns:Roads a prov:Entity ;
+    rdfs:label "Roads" .
+
+cns:Ruggedness a prov:Entity ;
+    rdfs:label "Ruggedness" ;
+    prov:wasGeneratedBy cns:FocalStatistics .
+
+cns:Ruggedness_Reclassified a prov:Entity ;
+    rdfs:label "Ruggedness_Reclassified" ;
+    rdfs:comment "The value of Ruggedness_Reclassified for the Activity WeightedSum is 0,1" ;
+    prov:wasGeneratedBy cns:Reclassify .
+
+cns:Suitability_Surface a prov:Entity ;
+    rdfs:label "Suitability_Surface" ;
+    prov:wasGeneratedBy cns:WeightedSum .
+
+cns:WeightedSum a prov:Activity ;
+    rdfs:label "WeightedSum" ;
+    prov:used cns:Distance_to_Roads_Reclassified,
+        cns:Land_Cover_Reclassified,
+        cns:Protected_Status_Reclassified,
+        cns:Ruggedness_Reclassified .
+
+cns:CostConnectivity a prov:Activity ;
+    rdfs:label "CostConnectivity" ;
+    prov:used cns:CoreMountainLionHabitats,
+        cns:Suitability_Surface .
+
+cns:EuclideanDistance a prov:Activity ;
+    rdfs:label "EuclideanDistance" ;
+    prov:used cns:Roads .
+
