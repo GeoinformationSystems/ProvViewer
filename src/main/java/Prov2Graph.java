@@ -599,11 +599,18 @@ public class Prov2Graph extends HttpServlet {
 
 				if (activityName == null) {
 					// if node is blank node, set label "undefined"
-					if (activity.asNode().getBlankNodeId() != null) {
+					try {
+						activity.asNode().getBlankNodeId();
 						activityName = "undefined";
-					} else {
+					} catch (java.lang.UnsupportedOperationException unsupportedEx) {
+						// System.out.println("Node is no BlankNode");
 						activityName = activityId;
 					}
+					// if (activity.asNode().getBlankNodeId() != null) {
+					// activityName = "undefined";
+					// } else {
+					// activityName = activityId;
+					// }
 
 				}
 				int nameLength = activityName.length() * 7 + 10;
